@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("Handiness.Winform")]
-[assembly: AssemblyDescription("Handiness Winform  控件集")]
+[assembly: AssemblyTitle("ConsoleTestUnit")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Handiness")]
-[assembly: AssemblyProduct("Handiness.Winform")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("ConsoleTestUnit")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("d969a5ce-a502-4fb5-a03d-2c5d6a5f0f55")]
+[assembly: Guid("afc7d876-b97c-4f69-b835-3e8aa9bf8678")]
 
 // 程序集的版本信息由下列四个值组成: 
 //
