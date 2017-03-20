@@ -30,6 +30,8 @@ namespace Handiness.Winform.Control
         public HatchStyle HatchBrushStyle { get; set; } = HatchStyle.DarkHorizontal;
         [Description("等待指示器内部的颜色")]
         public Color InnerColor { get; set; }
+        [Description("是否让指示器内部颜色跟随父容器背景色变化")]
+        public Boolean IsFollowBackColor { get; set; } = true;
         [Description("滚动部分的笔刷类型")]
         public RollPartBrushType RollPartType { get; set; } = RollPartBrushType.Solid;
 
@@ -228,7 +230,7 @@ namespace Handiness.Winform.Control
             //让容器背景跟随父容器的背景颜色变化
             if (this.Parent != null)
             {
-                if (this.InnerColor == this.BackColor)
+                if (this.IsFollowBackColor)
                 {
                     this.InnerColor = this.Parent.BackColor;
                 }

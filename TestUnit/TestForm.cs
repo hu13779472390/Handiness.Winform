@@ -29,7 +29,14 @@ namespace TestUnit
 
         private void button1_Click(Object sender, EventArgs e)
         {
-            this.circleWaitIndicator1.IsRolled = !this.circleWaitIndicator1.IsRolled;
+            //this.circleWaitIndicator1.IsRolled = !this.circleWaitIndicator1.IsRolled;
+            Form1 form = new Form1();
+            form.ShowDialog();
+        }
+
+        private void circleWaitIndicator1_Click(Object sender, EventArgs e)
+        {
+
         }
     }
     public interface ITest<out T> where T : class
