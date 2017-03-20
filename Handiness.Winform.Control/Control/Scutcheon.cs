@@ -85,7 +85,6 @@ namespace Handiness.Winform.Control
             {
                 case ScutcheonShapeType.Square:
                     {
-
                         g.FillRectangle(shadowBursh, shadowRect);
                         g.FillRectangle(scutcheonBrush, scutcheonRect);
                     }
@@ -122,6 +121,9 @@ namespace Handiness.Winform.Control
             {
                 g.DrawString(this.Text, this.Font, textBrush, textLocation);
             }
+
+            shadowBursh.Dispose();
+            scutcheonBrush.Dispose();
             base.OnPaint(e);
         }
         protected override void OnParentBackColorChanged(EventArgs e)

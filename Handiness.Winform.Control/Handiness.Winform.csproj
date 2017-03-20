@@ -41,10 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Control\Button.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Control\ControlCodeTemplate.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Control\Scutcheon.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Control\WaitIndicator.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
