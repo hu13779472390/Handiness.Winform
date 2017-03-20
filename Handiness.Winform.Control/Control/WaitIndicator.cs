@@ -214,10 +214,9 @@ namespace Handiness.Winform.Control
                              this._outSideCircleRect.X, this._outSideCircleRect.Y,
                              this._outSideCircleRect.Width, this._outSideCircleRect.Height,
                          beginAngle, endAngle);
-            g.FillPie(innerCircleBrush,
-                this._innserCircleRect.X, this._innserCircleRect.Y,
-                this._innserCircleRect.Width, this._innserCircleRect.Height,
-                beginAngle, endAngle);
+            g.FillEllipse(innerCircleBrush,
+            this._innserCircleRect.X, this._innserCircleRect.Y,
+            this._innserCircleRect.Width, this._innserCircleRect.Height);
 
             annulusBrush.Dispose();
             innerCircleBrush.Dispose();
