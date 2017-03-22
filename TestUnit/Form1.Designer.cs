@@ -49,7 +49,7 @@
             this.circleWaitIndicator12.EachRollingAngle = 30F;
             this.circleWaitIndicator12.HatchBrushStyle = System.Drawing.Drawing2D.HatchStyle.DarkHorizontal;
             this.circleWaitIndicator12.InnerColor = System.Drawing.SystemColors.ButtonFace;
-            this.circleWaitIndicator12.IsFollowBackColor = true;
+            this.circleWaitIndicator12.IsFollowParentBackColor = true;
             this.circleWaitIndicator12.IsRolled = true;
             this.circleWaitIndicator12.Location = new System.Drawing.Point(344, 260);
             this.circleWaitIndicator12.Name = "circleWaitIndicator12";
@@ -69,7 +69,7 @@
             this.circleWaitIndicator11.EachRollingAngle = 30F;
             this.circleWaitIndicator11.HatchBrushStyle = System.Drawing.Drawing2D.HatchStyle.DarkHorizontal;
             this.circleWaitIndicator11.InnerColor = System.Drawing.SystemColors.ButtonFace;
-            this.circleWaitIndicator11.IsFollowBackColor = true;
+            this.circleWaitIndicator11.IsFollowParentBackColor = true;
             this.circleWaitIndicator11.IsRolled = true;
             this.circleWaitIndicator11.Location = new System.Drawing.Point(263, 251);
             this.circleWaitIndicator11.Name = "circleWaitIndicator11";
@@ -89,7 +89,7 @@
             this.circleWaitIndicator10.EachRollingAngle = 30F;
             this.circleWaitIndicator10.HatchBrushStyle = System.Drawing.Drawing2D.HatchStyle.DarkHorizontal;
             this.circleWaitIndicator10.InnerColor = System.Drawing.SystemColors.ButtonFace;
-            this.circleWaitIndicator10.IsFollowBackColor = true;
+            this.circleWaitIndicator10.IsFollowParentBackColor = true;
             this.circleWaitIndicator10.IsRolled = true;
             this.circleWaitIndicator10.Location = new System.Drawing.Point(201, 288);
             this.circleWaitIndicator10.Name = "circleWaitIndicator10";
@@ -109,7 +109,7 @@
             this.circleWaitIndicator9.EachRollingAngle = 30F;
             this.circleWaitIndicator9.HatchBrushStyle = System.Drawing.Drawing2D.HatchStyle.DarkHorizontal;
             this.circleWaitIndicator9.InnerColor = System.Drawing.SystemColors.ButtonFace;
-            this.circleWaitIndicator9.IsFollowBackColor = true;
+            this.circleWaitIndicator9.IsFollowParentBackColor = true;
             this.circleWaitIndicator9.IsRolled = true;
             this.circleWaitIndicator9.Location = new System.Drawing.Point(201, 251);
             this.circleWaitIndicator9.Name = "circleWaitIndicator9";
@@ -129,7 +129,7 @@
             this.circleWaitIndicator8.EachRollingAngle = 30F;
             this.circleWaitIndicator8.HatchBrushStyle = System.Drawing.Drawing2D.HatchStyle.DarkHorizontal;
             this.circleWaitIndicator8.InnerColor = System.Drawing.SystemColors.ButtonFace;
-            this.circleWaitIndicator8.IsFollowBackColor = true;
+            this.circleWaitIndicator8.IsFollowParentBackColor = true;
             this.circleWaitIndicator8.IsRolled = true;
             this.circleWaitIndicator8.Location = new System.Drawing.Point(313, 210);
             this.circleWaitIndicator8.Name = "circleWaitIndicator8";
@@ -149,7 +149,7 @@
             this.circleWaitIndicator7.EachRollingAngle = 30F;
             this.circleWaitIndicator7.HatchBrushStyle = System.Drawing.Drawing2D.HatchStyle.DarkHorizontal;
             this.circleWaitIndicator7.InnerColor = System.Drawing.SystemColors.ButtonFace;
-            this.circleWaitIndicator7.IsFollowBackColor = true;
+            this.circleWaitIndicator7.IsFollowParentBackColor = true;
             this.circleWaitIndicator7.IsRolled = true;
             this.circleWaitIndicator7.Location = new System.Drawing.Point(397, 288);
             this.circleWaitIndicator7.Name = "circleWaitIndicator7";
@@ -169,7 +169,7 @@
             this.circleWaitIndicator6.EachRollingAngle = 30F;
             this.circleWaitIndicator6.HatchBrushStyle = System.Drawing.Drawing2D.HatchStyle.DarkHorizontal;
             this.circleWaitIndicator6.InnerColor = System.Drawing.SystemColors.ButtonFace;
-            this.circleWaitIndicator6.IsFollowBackColor = true;
+            this.circleWaitIndicator6.IsFollowParentBackColor = true;
             this.circleWaitIndicator6.IsRolled = true;
             this.circleWaitIndicator6.Location = new System.Drawing.Point(381, 194);
             this.circleWaitIndicator6.Name = "circleWaitIndicator6";
@@ -189,7 +189,7 @@
             this.circleWaitIndicator5.EachRollingAngle = 30F;
             this.circleWaitIndicator5.HatchBrushStyle = System.Drawing.Drawing2D.HatchStyle.DarkHorizontal;
             this.circleWaitIndicator5.InnerColor = System.Drawing.SystemColors.ButtonFace;
-            this.circleWaitIndicator5.IsFollowBackColor = true;
+            this.circleWaitIndicator5.IsFollowParentBackColor = true;
             this.circleWaitIndicator5.IsRolled = true;
             this.circleWaitIndicator5.Location = new System.Drawing.Point(293, 319);
             this.circleWaitIndicator5.Name = "circleWaitIndicator5";
@@ -209,7 +209,7 @@
             this.circleWaitIndicator4.EachRollingAngle = 30F;
             this.circleWaitIndicator4.HatchBrushStyle = System.Drawing.Drawing2D.HatchStyle.DarkHorizontal;
             this.circleWaitIndicator4.InnerColor = System.Drawing.SystemColors.ButtonFace;
-            this.circleWaitIndicator4.IsFollowBackColor = true;
+            this.circleWaitIndicator4.IsFollowParentBackColor = true;
             this.circleWaitIndicator4.IsRolled = true;
             this.circleWaitIndicator4.Location = new System.Drawing.Point(121, 241);
             this.circleWaitIndicator4.Name = "circleWaitIndicator4";
@@ -229,7 +229,7 @@
             this.circleWaitIndicator3.EachRollingAngle = 30F;
             this.circleWaitIndicator3.HatchBrushStyle = System.Drawing.Drawing2D.HatchStyle.DarkHorizontal;
             this.circleWaitIndicator3.InnerColor = System.Drawing.SystemColors.ButtonFace;
-            this.circleWaitIndicator3.IsFollowBackColor = true;
+            this.circleWaitIndicator3.IsFollowParentBackColor = true;
             this.circleWaitIndicator3.IsRolled = true;
             this.circleWaitIndicator3.Location = new System.Drawing.Point(293, 288);
             this.circleWaitIndicator3.Name = "circleWaitIndicator3";
@@ -249,7 +249,7 @@
             this.circleWaitIndicator2.EachRollingAngle = 30F;
             this.circleWaitIndicator2.HatchBrushStyle = System.Drawing.Drawing2D.HatchStyle.SolidDiamond;
             this.circleWaitIndicator2.InnerColor = System.Drawing.SystemColors.ButtonFace;
-            this.circleWaitIndicator2.IsFollowBackColor = true;
+            this.circleWaitIndicator2.IsFollowParentBackColor = true;
             this.circleWaitIndicator2.IsRolled = true;
             this.circleWaitIndicator2.Location = new System.Drawing.Point(281, 87);
             this.circleWaitIndicator2.Name = "circleWaitIndicator2";
@@ -269,7 +269,7 @@
             this.circleWaitIndicator1.EachRollingAngle = 30F;
             this.circleWaitIndicator1.HatchBrushStyle = System.Drawing.Drawing2D.HatchStyle.DarkHorizontal;
             this.circleWaitIndicator1.InnerColor = System.Drawing.SystemColors.ButtonFace;
-            this.circleWaitIndicator1.IsFollowBackColor = true;
+            this.circleWaitIndicator1.IsFollowParentBackColor = true;
             this.circleWaitIndicator1.IsRolled = true;
             this.circleWaitIndicator1.Location = new System.Drawing.Point(81, 74);
             this.circleWaitIndicator1.Name = "circleWaitIndicator1";

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Timers;
 using Timer = System.Timers.Timer;
@@ -24,14 +21,14 @@ namespace Handiness.Winform.Control
     /// <summary>
     /// 等待指示器
     /// </summary>
-    public class WaitIndicator : System.Windows.Forms.Control
+    public class WaitIndicator : BaseControl
     {
         [Description("当使用RollPartBrushType使用Hatch时此属性生效")]
         public HatchStyle HatchBrushStyle { get; set; } = HatchStyle.DarkHorizontal;
         [Description("等待指示器内部的颜色")]
         public Color InnerColor { get; set; }
         [Description("是否让指示器内部颜色跟随父容器背景色变化")]
-        public Boolean IsFollowBackColor { get; set; } = true;
+        public Boolean IsFollowParentBackColor { get; set; } = true;
         [Description("滚动部分的笔刷类型")]
         public RollPartBrushType RollPartType { get; set; } = RollPartBrushType.Solid;
 
@@ -90,10 +87,10 @@ namespace Handiness.Winform.Control
         }
 
         [Description("每次滚动的角度值")]
-        public float EachRollingAngle { get; set; } = 15;
+        public Single EachRollingAngle { get; set; } = 15;
 
         [Description("滚动部分的长度占总周长的百分比")]
-        public float RollPartPercent
+        public Single RollPartPercent
         {
             get
             {
@@ -111,7 +108,7 @@ namespace Handiness.Winform.Control
         [Description("等待指示器的颜色")]
         public Color WaitIndicatorColor { get; set; } = Color.FromArgb(175, 175, 175);
 
-        public float CurrentAngle
+        public Single CurrentAngle
         {
             get
             {
@@ -128,19 +125,18 @@ namespace Handiness.Winform.Control
         /// <summary>
         /// 当前的角度
         /// </summary>
-        private float _currentAngle;
-        private float _rollPartPercentage = 20;
+        private Single _currentAngle;
+        private Single _rollPartPercentage = 40;
         private Int32 _rollPartWidthPercent = 10;
         private RectangleF _outSideCircleRect;
         private RectangleF _innserCircleRect;
         /***************************/
         public WaitIndicator() : base()
         {
-            this._timer = new Timer(75.0);
+            this._timer = new Timer(60.0);
             this._timer.Elapsed += _timer_Elapsed;
             this.InnerColor = this.BackColor;
             this.LoadDrawRect();
-            this.DoubleBuffered = true;
         }
 
         private void _timer_Elapsed(Object sender, ElapsedEventArgs e)
@@ -165,12 +161,12 @@ namespace Handiness.Winform.Control
         {
             if (force || this._outSideCircleRect == RectangleF.Empty || this._innserCircleRect == RectangleF.Empty)
             {
-                float annulusWidth = this.Width - 1;
-                float annulusHeight = this.Height - 1;
+                Single annulusWidth = this.Width - 1;
+                Single annulusHeight = this.Height - 1;
                 //外圆区域
                 RectangleF outsideCircleRect = new RectangleF(0, 0, annulusWidth, annulusHeight);
 
-                float innerCircleSziePercent = (100 - this.RollPartWidthPercent) / 100f;
+                Single innerCircleSziePercent = (100 - this.RollPartWidthPercent) / 100f;
 
                 //计算内圆的大小与位置
                 SizeF innerCircleSzie = new SizeF(annulusWidth * innerCircleSziePercent, annulusHeight * innerCircleSziePercent);
@@ -196,8 +192,8 @@ namespace Handiness.Winform.Control
             Brush innerCircleBrush = new SolidBrush(this.InnerColor);
 
             //计算滚动部分的起始角度与结束角度
-            float beginAngle = this._currentAngle;
-            float endAngle = this._rollPartPercentage * 360F / 100F;
+            Single beginAngle = this._currentAngle;
+            Single endAngle = this._rollPartPercentage * 360F / 100F;
 
             switch (this.RollPartType)
             {
@@ -220,21 +216,15 @@ namespace Handiness.Winform.Control
             this._innserCircleRect.X, this._innserCircleRect.Y,
             this._innserCircleRect.Width, this._innserCircleRect.Height);
 
-            annulusBrush.Dispose();
-            innerCircleBrush.Dispose();
+            this.ReleaseBrush(annulusBrush, innerCircleBrush);
             base.OnPaint(e);
         }
         protected override void OnParentBackColorChanged(EventArgs e)
         {
-            //让容器背景跟随父容器的背景颜色变化
-            if (this.Parent != null)
-            {
-                if (this.IsFollowBackColor)
-                {
-                    this.InnerColor = this.Parent.BackColor;
-                }
-                this.BackColor = this.Parent.BackColor;
 
+            if (this.IsFollowParentBackColor)
+            {
+                this.InnerColor = this.Parent.BackColor;
             }
             base.OnParentBackColorChanged(e);
         }

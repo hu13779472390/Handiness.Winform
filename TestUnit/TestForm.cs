@@ -14,7 +14,7 @@ namespace TestUnit
         public TestForm()
         {
             InitializeComponent();
-            this.scutcheon1.Paint += Scutcheon1_Paint;
+
         }
 
         private void Scutcheon1_Paint(Object sender, PaintEventArgs e)
@@ -37,6 +37,29 @@ namespace TestUnit
         private void circleWaitIndicator1_Click(Object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click(Object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(Object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_DoubleClick(Object sender, EventArgs e)
+        {
+            this.button2.IsWaiting = !this.button2.IsWaiting;
+            if (this.button2.IsWaiting)
+            {
+                this.button2.Text = "加载中...";
+            }
+            else
+            {
+                this.button2.Text = "完成";
+            }
         }
     }
     public interface ITest<out T> where T : class

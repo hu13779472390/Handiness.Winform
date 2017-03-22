@@ -44,6 +44,9 @@
     <Compile Include="Control\Button.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Control\BaseControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Control\ControlCodeTemplate.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -54,6 +57,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Control\RoundStyle.cs" />
+    <Compile Include="WMConstants.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
