@@ -37,7 +37,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(89, 82);
+            this.button1.Location = new System.Drawing.Point(163, 140);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(269, 115);
             this.button1.TabIndex = 5;
@@ -61,13 +61,13 @@
             this.scutcheon3.CanMousePenetrable = true;
             this.scutcheon3.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.scutcheon3.ForeColor = System.Drawing.Color.White;
-            this.scutcheon3.Location = new System.Drawing.Point(295, 233);
+            this.scutcheon3.Location = new System.Drawing.Point(174, 164);
             this.scutcheon3.Name = "scutcheon3";
             this.scutcheon3.ScutcheonColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(166)))), ((int)(((byte)(228)))));
             this.scutcheon3.ScutcheonShape = Handiness.Winform.Control.ScutcheonShapeType.Circle;
             this.scutcheon3.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(175)))), ((int)(((byte)(175)))), ((int)(((byte)(175)))));
             this.scutcheon3.ShadowWidth = 2;
-            this.scutcheon3.Size = new System.Drawing.Size(225, 133);
+            this.scutcheon3.Size = new System.Drawing.Size(93, 54);
             this.scutcheon3.TabIndex = 8;
             this.scutcheon3.Text = "scutcheon3";
             // 
@@ -80,12 +80,12 @@
             this.button2.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button2.ForeColor = System.Drawing.Color.White;
             this.button2.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
-            this.button2.IsWaiting = false;
-            this.button2.Location = new System.Drawing.Point(552, 282);
+            this.button2.IsWaiting = true;
+            this.button2.Location = new System.Drawing.Point(480, 320);
             this.button2.Name = "button2";
             this.button2.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(195)))), ((int)(((byte)(245)))));
             this.button2.RoundStyle = Handiness.Winform.Control.RoundStyle.All;
-            this.button2.Size = new System.Drawing.Size(144, 64);
+            this.button2.Size = new System.Drawing.Size(133, 57);
             this.button2.TabIndex = 6;
             this.button2.Text = "开始";
             this.button2.WaitIndicator = null;
@@ -123,6 +123,8 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "TestForm";
             this.Text = "ControlTestForm";
+            this.Click += new System.EventHandler(this.TestForm_Click);
+            this.DoubleClick += new System.EventHandler(this.TestForm_DoubleClick);
             this.ResumeLayout(false);
 
         }

@@ -23,33 +23,48 @@ namespace Handiness.Winform.Control
             this.SetStyle(ControlStyles.Opaque, false);
             this.DoubleBuffered = true;
         }
-
         /// <summary>
-        /// 在控件上绘制文字信息，此函数默认将文字绘制至区域中心
+        /// 绘制文字信息至指定区域，默认文字垂直位置居中，水平位置由参数<see cref="x"/>指定
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="vectorRect"></param>
+        /// <param name="x">若值为0 则文字水平也居中</param>
+        protected virtual void DrawText(Graphics g, RectangleF vectorRect, Single x)
+        {
+            PointF offsex = new PointF(0, 0);
+            if (x != 0)
+            {
+                vectorRect.Width = 0;
+                offsex.X = x;
+            }
+            this.DrawText(g, vectorRect, offsex);
+        }
+        /// <summary>
+        /// 在控件上绘制文字信息，此函数默认将文字绘制至区域中心,并根据偏移量调整位置
         /// </summary>
         /// <param name="g"></param>
         /// <param name="vectorRect">承载文字的区域</param>
         /// <param name="offset">文字的偏移量</param>
         protected virtual void DrawText(Graphics g, RectangleF vectorRect, PointF offset)
         {
+            SizeF textPixelSize = this.FetchTextPixelSize(g);
+            this.TextPixelSize = textPixelSize;
+            PointF textLocation = new PointF(0, 0);
+            textLocation.X = vectorRect.Width != 0 ? (vectorRect.Width - textPixelSize.Width) / 2 : 0;
+            textLocation.Y = vectorRect.Height != 0 ? (vectorRect.Height - textPixelSize.Height) / 2 : 0;
+            if (!offset.IsEmpty)
+            {
+                textLocation.X += offset.X;
+                textLocation.Y += offset.Y;
+            }
+            this.DrawText(g, textLocation.X, textLocation.Y);
+        }
+        protected virtual void DrawText(Graphics g, Single x, Single y)
+        {
             if (!String.IsNullOrEmpty(this.Text))
             {
-                SizeF textPixelSize = this.FetchTextPixelSize(g);
-                this.TextPixelSize = textPixelSize;
-
                 Brush textBrush = new SolidBrush(this.ForeColor);
-                PointF textLocation = new PointF(0, 0);
-                if (!vectorRect.IsEmpty)
-                {
-                    textLocation.X = vectorRect.Width != 0 ? (vectorRect.Width - textPixelSize.Width) / 2 : 0;
-                    textLocation.Y = vectorRect.Height!=0?(vectorRect.Height - textPixelSize.Height) / 2:0;
-                }
-                if (!offset.IsEmpty)
-                {
-                    textLocation.X += offset.X;
-                    textLocation.Y += offset.Y;
-                }
-                g.DrawString(this.Text, this.Font, textBrush, textLocation);
+                g.DrawString(this.Text, this.Font, textBrush, x, y);
                 textBrush.Dispose();
             }
         }
@@ -90,13 +105,32 @@ namespace Handiness.Winform.Control
                     case WMConstants.WM_MOUSEHOVER:
                     case WMConstants.WM_MOUSELAST:
                     case WMConstants.WM_MOUSELEAVE:
+                    case WMConstants.WM_LBUTTONDOWN:
+                    case WMConstants.WM_LBUTTONUP:
+                    case WMConstants.WM_LBUTTONDBLCLK:
+                    case WMConstants.WM_RBUTTONDOWN:
+                    case WMConstants.WM_RBUTTONUP:
+                    case WMConstants.WM_RBUTTONDBLCLK:
+                    case WMConstants.WM_MBUTTONDOWN:
+                    case WMConstants.WM_MBUTTONUP:
+                    case WMConstants.WM_MBUTTONDBLCLK:
+                    case WMConstants.WM_NCHITTEST:
                         {
-                            m.Msg = WMConstants.WM_NULL;
+                            //将返回值置为 -1 表示交由父控件处理
+                            m.Result = (IntPtr)(-1);
+                        }
+                        break;
+                    default:
+                        {
+                            base.WndProc(ref m);
                         }
                         break;
                 }
             }
-            base.WndProc(ref m);
+            else
+            {
+                base.WndProc(ref m);
+            }
         }
     }
 }

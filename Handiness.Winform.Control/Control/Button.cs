@@ -90,16 +90,16 @@ namespace Handiness.Winform.Control
             Brush shadowBrush = new SolidBrush(this._shadowColor);
             RectangleF buttonRect = new RectangleF(new PointF(0, 0), buttonSzie);
             RectangleF shadowRect = new RectangleF(new PointF(this._shadowWidth, this._shadowWidth), buttonSzie);
-           //Single textXoffset=
-           // if (this.IsWaiting)
-           // {
-           //     textLocationOffset = new PointF(this._waitIndicator.Width,0);
-           // }
+            Single textOffsetX = 0;
+            if (this.IsWaiting)
+            {
+                textOffsetX = this._waitIndicator.Location.X + this._waitIndicator.Width;
+            }
 
             g.FillRectangle(shadowBrush, shadowRect);
             g.FillRectangle(nrlBrush, buttonRect);
 
-            this.DrawText(g, buttonRect);
+            this.DrawText(g, buttonRect, textOffsetX);
             //释放笔刷资源
             this.ReleaseBrush(nrlBrush, shadowBrush);
             base.OnPaint(pevent);

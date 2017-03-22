@@ -58,6 +58,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Control\RoundStyle.cs" />
+    <Compile Include="WindowsApi.cs" />
     <Compile Include="WMConstants.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

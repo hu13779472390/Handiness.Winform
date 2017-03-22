@@ -61,6 +61,16 @@ namespace TestUnit
                 this.button2.Text = "完成";
             }
         }
+
+        private void TestForm_Click(Object sender, EventArgs e)
+        {
+            MessageBox.Show("fdf");
+        }
+
+        private void TestForm_DoubleClick(Object sender, EventArgs e)
+        {
+            MessageBox.Show("double ");
+        }
     }
     public interface ITest<out T> where T : class
     {
