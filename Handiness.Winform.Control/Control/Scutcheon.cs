@@ -64,7 +64,10 @@ namespace Handiness.Winform.Control
 
             RectangleF scutcheonRect = new Rectangle(0, 0, scutcheonWidth, scutcheonHeight);
             Brush scutcheonBrush = new SolidBrush(this.ScutcheonColor);
+
             RectangleF textVectorRect = scutcheonRect;
+            Brush textBrush = new SolidBrush(this.ForeColor);
+
             switch (this.ScutcheonShape)
             {
                 case ScutcheonShapeType.Square:
@@ -76,7 +79,7 @@ namespace Handiness.Winform.Control
                 case ScutcheonShapeType.Triangle:
                     {
                         //文字相对于垂直居中下移25%
-                        textVectorRect.Y = textVectorRect.Y * 1.25F;
+                        textVectorRect.Height = textVectorRect.Height * 1.25F;
 
                         PointF[] vertexes = new PointF[]
                             {
@@ -92,6 +95,7 @@ namespace Handiness.Winform.Control
                             };
                         //绘制阴影
                         g.FillPolygon(shadowBursh, shadowVertexes);
+                        //绘制内容
                         g.FillPolygon(scutcheonBrush, vertexes);
                     }
                     break;
@@ -103,9 +107,9 @@ namespace Handiness.Winform.Control
                     }
                     break;
             }
-            this.DrawText(g, shadowRect);
+            this.DrawText(g, textBrush, textVectorRect);
 
-            this.ReleaseBrush(shadowBursh, scutcheonBrush);
+            this.ReleaseBrush(shadowBursh, scutcheonBrush, textBrush);
             base.OnPaint(e);
         }
     }

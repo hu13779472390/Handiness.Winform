@@ -51,8 +51,11 @@ namespace Handiness.Winform.Control
         [Description("按钮被点击时的颜色")]
         public Color DownColor { get; set; } = Color.FromArgb(175, 175, 175);
 
-   
-        public WaitIndicator WaitIndicator { get; set; }
+        [Description("此按钮的等待指示器")]
+        public WaitIndicator WaitIndicator { get
+            {
+                return this._waitIndicator;
+            } }
         /***********************/
         private Color _normalColor = Color.FromArgb(61, 195, 245);
         private Color _currentColor = Color.FromArgb(61, 195, 245);
@@ -90,6 +93,7 @@ namespace Handiness.Winform.Control
             Brush shadowBrush = new SolidBrush(this._shadowColor);
             RectangleF buttonRect = new RectangleF(new PointF(0, 0), buttonSzie);
             RectangleF shadowRect = new RectangleF(new PointF(this._shadowWidth, this._shadowWidth), buttonSzie);
+            Brush textBrush = new SolidBrush(this.ForeColor);
             Single textOffsetX = 0;
             if (this.IsWaiting)
             {
@@ -99,9 +103,10 @@ namespace Handiness.Winform.Control
             g.FillRectangle(shadowBrush, shadowRect);
             g.FillRectangle(nrlBrush, buttonRect);
 
-            this.DrawText(g, buttonRect, textOffsetX);
+     
+            this.DrawText(g, textBrush,buttonRect, textOffsetX);
             //释放笔刷资源
-            this.ReleaseBrush(nrlBrush, shadowBrush);
+            this.ReleaseBrush(nrlBrush, shadowBrush, textBrush);
             base.OnPaint(pevent);
         }
         private void DrawRound(RoundStyle round, Graphics g)
@@ -111,13 +116,7 @@ namespace Handiness.Winform.Control
                 default:
                 case RoundStyle.All:
                     {
-                        //Int32 raduis = 10;
-                        //GraphicsPath path = new GraphicsPath();
-                        //path.AddArc(0,0,raduis * 2, raduis * 2,180, 90);
-                        //Brush brush = new SolidBrush(this.NormalColor);
-                        //path.CloseFigure();
-                        //g.FillPath(brush, path);
-                   
+                       //暂不绘制圆角
                     }
                     break;
             }

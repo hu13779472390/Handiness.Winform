@@ -12,15 +12,16 @@ namespace Handiness.Winform.Control
     public class BaseControl : System.Windows.Forms.Control
     {
         [Description("文本内容在当前字体与环境下的占用的大小（注意！当他大于控件的大小时，控件不会显示文字信息）")]
-        public SizeF TextPixelSize { get; private set; }
+        public virtual SizeF TextPixelSize { get; private set; }
         /// <summary>
         /// 开启鼠标穿透
         /// </summary>
         [Description("开启鼠标穿透")]
-        public Boolean CanMousePenetrable { get; set; } = false;
+        public virtual Boolean CanMousePenetrable { get; set; } = false;
         public BaseControl()
         {
             this.SetStyle(ControlStyles.Opaque, false);
+            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.DoubleBuffered = true;
         }
         /// <summary>
@@ -29,7 +30,7 @@ namespace Handiness.Winform.Control
         /// <param name="g"></param>
         /// <param name="vectorRect"></param>
         /// <param name="x">若值为0 则文字水平也居中</param>
-        protected virtual void DrawText(Graphics g, RectangleF vectorRect, Single x)
+        protected virtual void DrawText(Graphics g, Brush brush, RectangleF vectorRect, Single x)
         {
             PointF offsex = new PointF(0, 0);
             if (x != 0)
@@ -37,7 +38,7 @@ namespace Handiness.Winform.Control
                 vectorRect.Width = 0;
                 offsex.X = x;
             }
-            this.DrawText(g, vectorRect, offsex);
+            this.DrawText(g, brush, vectorRect, offsex);
         }
         /// <summary>
         /// 在控件上绘制文字信息，此函数默认将文字绘制至区域中心,并根据偏移量调整位置
@@ -45,7 +46,7 @@ namespace Handiness.Winform.Control
         /// <param name="g"></param>
         /// <param name="vectorRect">承载文字的区域</param>
         /// <param name="offset">文字的偏移量</param>
-        protected virtual void DrawText(Graphics g, RectangleF vectorRect, PointF offset)
+        protected virtual void DrawText(Graphics g, Brush brush, RectangleF vectorRect, PointF offset)
         {
             SizeF textPixelSize = this.FetchTextPixelSize(g);
             this.TextPixelSize = textPixelSize;
@@ -57,15 +58,16 @@ namespace Handiness.Winform.Control
                 textLocation.X += offset.X;
                 textLocation.Y += offset.Y;
             }
-            this.DrawText(g, textLocation.X, textLocation.Y);
+            if (textLocation.X + textPixelSize.Width < this.Width)
+            {
+                this.DrawText(g, brush, textLocation.X, textLocation.Y);
+            }
         }
-        protected virtual void DrawText(Graphics g, Single x, Single y)
+        protected virtual void DrawText(Graphics g, Brush brush, Single x, Single y)
         {
             if (!String.IsNullOrEmpty(this.Text))
             {
-                Brush textBrush = new SolidBrush(this.ForeColor);
-                g.DrawString(this.Text, this.Font, textBrush, x, y);
-                textBrush.Dispose();
+                g.DrawString(this.Text, this.Font, brush, x, y);
             }
         }
         protected virtual SizeF FetchTextPixelSize(Graphics g)
@@ -77,14 +79,17 @@ namespace Handiness.Winform.Control
         /// </summary>
         /// <param name="g"></param>
         /// <param name="vectorRect">承载文字的区域</param>
-        protected virtual void DrawText(Graphics g, RectangleF vectorRect)
+        protected virtual void DrawText(Graphics g, Brush brush, RectangleF vectorRect)
         {
-            this.DrawText(g, vectorRect, PointF.Empty);
+            this.DrawText(g, brush, vectorRect, PointF.Empty);
         }
         protected override void OnParentBackColorChanged(EventArgs e)
         {
             //让容器背景跟随父容器的背景颜色变化
-            this.BackColor = this.Parent.BackColor;
+            if (this.Parent != null)
+            {
+                this.BackColor = this.Parent.BackColor;
+            }
             base.OnParentBackColorChanged(e);
         }
         protected virtual void ReleaseBrush(params Brush[] brushs)
@@ -92,6 +97,13 @@ namespace Handiness.Winform.Control
             foreach (Brush brush in brushs)
             {
                 brush.Dispose();
+            }
+        }
+        protected virtual void SendMessageToParent(Int32 msg,Int32 wParam=0,Int32 lParam=0)
+        {
+            if (this.Parent != null)
+            {
+                WindowsApi.SendMessage(this.Parent.Handle, msg, wParam, lParam);
             }
         }
         protected override void WndProc(ref Message m)

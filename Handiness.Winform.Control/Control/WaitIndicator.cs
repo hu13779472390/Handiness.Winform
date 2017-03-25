@@ -133,6 +133,7 @@ namespace Handiness.Winform.Control
         /***************************/
         public WaitIndicator() : base()
         {
+      
             this._timer = new Timer(60.0);
             this._timer.Elapsed += _timer_Elapsed;
             this.InnerColor = this.BackColor;
