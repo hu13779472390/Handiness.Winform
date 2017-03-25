@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Design;
 using System.Drawing.Text;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,14 @@ using System.Text;
 
 namespace Handiness.Winform
 {
+    //TODO:awesome字体代码选择器的实现
+    /// <summary> 
+    /// awesome字体代码选择器
+    /// </summary>
+    public class AwesomeFontCodeSelector : UITypeEditor
+    {
+
+    }
     public class AwesomeFont
     {
         private static FontFamily _AwesomeFontFamily;
@@ -36,7 +45,7 @@ namespace Handiness.Winform
             }
         }
 
-        public const String Px = "\uf26e";
+        public const String px_500 = "\uf26e";
         public const String address_book = "\uf2b9";
         public const String address_book_o = "\uf2ba";
         public const String address_card = "\uf2bb";
@@ -457,7 +466,7 @@ namespace Handiness.Winform
         public const String list_ol = "\uf0cb";
         public const String list_ul = "\uf0ca";
         public const String location_arrow = "\uf124";
-        public const String Lock = "\uf023";
+        public const String lock_spring = "\uf023";
         public const String long_arrow_down = "\uf175";
         public const String long_arrow_left = "\uf177";
         public const String long_arrow_right = "\uf178";
@@ -741,7 +750,7 @@ namespace Handiness.Winform
         public const String tripadvisor = "\uf262";
         public const String trophy = "\uf091";
         public const String truck = "\uf0d1";
-        public const String Try = "\uf195";
+        public const String try_hard = "\uf195";
         public const String tty = "\uf1e4";
         public const String tumblr = "\uf173";
         public const String tumblr_square = "\uf174";

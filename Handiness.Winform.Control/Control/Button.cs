@@ -27,8 +27,8 @@ namespace Handiness.Winform.Control
             }
         }
        
-        [Description("按钮的圆角类型")]
-        public RoundStyle RoundStyle { get;set; }
+        //[Description("按钮的圆角类型")]
+        //public RoundStyle RoundStyle { get;set; }
         [Description("按钮正常时的颜色")]
         public Color NormalColor
         {
@@ -109,6 +109,7 @@ namespace Handiness.Winform.Control
             this.ReleaseBrush(nrlBrush, shadowBrush, textBrush);
             base.OnPaint(pevent);
         }
+        //TODO:按钮的圆角绘制
         private void DrawRound(RoundStyle round, Graphics g)
         {
             switch (round)

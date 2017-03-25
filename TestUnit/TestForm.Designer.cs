@@ -84,7 +84,6 @@
             this.button2.Location = new System.Drawing.Point(480, 320);
             this.button2.Name = "button2";
             this.button2.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(195)))), ((int)(((byte)(245)))));
-            this.button2.RoundStyle = Handiness.Winform.Control.RoundStyle.All;
             this.button2.Size = new System.Drawing.Size(133, 57);
             this.button2.TabIndex = 6;
             this.button2.Text = "开始";
@@ -102,7 +101,6 @@
             this.button4.Location = new System.Drawing.Point(451, 203);
             this.button4.Name = "button4";
             this.button4.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(195)))), ((int)(((byte)(245)))));
-            this.button4.RoundStyle = Handiness.Winform.Control.RoundStyle.Node;
             this.button4.Size = new System.Drawing.Size(142, 63);
             this.button4.TabIndex = 9;
             this.button4.Text = "button4";

@@ -31,6 +31,17 @@ namespace Handiness.Winform
             this.BackColor = Color.FromArgb(240, 240, 240);
         }
 
+        /// <summary>
+        /// 窗体阴影的绘制
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+        }
+
+
+        #region 窗体移动
         protected override void OnMouseDown(MouseEventArgs e)
         {
             if (MouseButtons.Left == e.Button)
@@ -57,5 +68,6 @@ namespace Handiness.Winform
             this._isMove = false;
             base.OnMouseUp(e);
         }
+        #endregion
     }
 }

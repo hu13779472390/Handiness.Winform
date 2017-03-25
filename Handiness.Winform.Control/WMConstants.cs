@@ -243,6 +243,24 @@ namespace Handiness.Winform
         public const int WM_APP = 0x8000; //   
         public const int WM_USER = 0x0400; //此消息能帮助应用程序自定义私有消息；  
 
+
+        public const int SC_SIZE = 0xF000;
+        public const int SC_MOVE = 0xF010;
+        public const int SC_MINIMIZE = 0xF020;
+        public const int SC_MAXIMIZE = 0xF030;
+        public const int SC_NEXTWINDOW = 0xF040;
+        public const int SC_PREVWINDOW = 0xF050;
+        public const int SC_CLOSE = 0xF060;
+        public const int SC_VSCROLL = 0xF070;
+        public const int SC_HSCROLL = 0xF080;
+        public const int SC_MOUSEMENU = 0xF090;
+        public const int SC_KEYMENU = 0xF100;
+        public const int SC_ARRANGE = 0xF110;
+        public const int SC_RESTORE = 0xF120;
+        public const int SC_TASKLIST = 0xF130;
+        public const int SC_SCREENSAVE = 0xF140;
+        public const int SC_HOTKEY = 0xF150;
+
         /////////////////////////////////////////////////////////////////////   
         //通知消息(Notification message)是指这样一种消息，一个窗口内的子控件发生了一些事情，需要通   
         //知父窗口。通知消息只适用于标准的窗口控件如按钮、列表框、组合框、编辑框，以及Windows 95公   

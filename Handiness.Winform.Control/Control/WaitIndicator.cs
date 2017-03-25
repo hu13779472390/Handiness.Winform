@@ -71,7 +71,7 @@ namespace Handiness.Winform.Control
         }
 
         [Description("滚动部分的宽度占控件宽度的百分比")]
-        public Int32 RollPartWidthPercent
+        public Single RollPartWidthPercent
         {
             get
             {
@@ -82,6 +82,8 @@ namespace Handiness.Winform.Control
                 if (value > 0 && value <= 60)
                 {
                     this._rollPartWidthPercent = value;
+                    this.LoadDrawRect(true);
+                    this.Invalidate();
                 }
             }
         }
@@ -101,6 +103,7 @@ namespace Handiness.Winform.Control
                 if (value > 0 && value < 85)
                 {
                     this._rollPartPercentage = value;
+                    this.Invalidate();
                 }
             }
         }
@@ -127,7 +130,7 @@ namespace Handiness.Winform.Control
         /// </summary>
         private Single _currentAngle;
         private Single _rollPartPercentage = 40;
-        private Int32 _rollPartWidthPercent = 10;
+        private Single _rollPartWidthPercent = 10;
         private RectangleF _outSideCircleRect;
         private RectangleF _innserCircleRect;
         /***************************/
@@ -167,7 +170,7 @@ namespace Handiness.Winform.Control
                 //外圆区域
                 RectangleF outsideCircleRect = new RectangleF(0, 0, annulusWidth, annulusHeight);
 
-                Single innerCircleSziePercent = (100 - this.RollPartWidthPercent) / 100f;
+                Single innerCircleSziePercent = (100 - this._rollPartWidthPercent) / 100f;
 
                 //计算内圆的大小与位置
                 SizeF innerCircleSzie = new SizeF(annulusWidth * innerCircleSziePercent, annulusHeight * innerCircleSziePercent);
@@ -220,14 +223,13 @@ namespace Handiness.Winform.Control
             this.ReleaseBrush(annulusBrush, innerCircleBrush);
             base.OnPaint(e);
         }
-        protected override void OnParentBackColorChanged(EventArgs e)
+        protected override void OnBackColorChanged(EventArgs e)
         {
-
             if (this.IsFollowParentBackColor)
             {
                 this.InnerColor = this.Parent.BackColor;
             }
-            base.OnParentBackColorChanged(e);
+            base.OnBackColorChanged(e);
         }
         protected override void Dispose(Boolean disposing)
         {

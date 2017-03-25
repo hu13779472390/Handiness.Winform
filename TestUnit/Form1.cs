@@ -15,8 +15,16 @@ namespace TestUnit
         public Form1()
         {
             InitializeComponent();
-            this.scutcheon1.Font = new Font(AwesomeFont.FontFamily, 15, FontStyle.Regular);
-            this.scutcheon1.Text = AwesomeFont.bus;
+        }
+
+        private void windowsButton1_Click(Object sender, EventArgs e)
+        {
+
+        }
+
+        private void windowsButton1_Click_1(Object sender, EventArgs e)
+        {
+
         }
     }
 }
