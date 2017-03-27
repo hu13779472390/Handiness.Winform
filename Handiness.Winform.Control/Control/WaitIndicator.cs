@@ -225,7 +225,7 @@ namespace Handiness.Winform.Control
         }
         protected override void OnBackColorChanged(EventArgs e)
         {
-            if (this.IsFollowParentBackColor)
+            if (this.IsFollowParentBackColor && this.Parent!=null)
             {
                 this.InnerColor = this.Parent.BackColor;
             }

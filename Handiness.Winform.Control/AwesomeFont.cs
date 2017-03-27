@@ -17,7 +17,7 @@ namespace Handiness.Winform
     /// </summary>
     public class AwesomeFontCodeSelector : UITypeEditor
     {
-
+        
     }
     public class AwesomeFont
     {
