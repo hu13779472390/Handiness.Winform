@@ -56,6 +56,9 @@
     <Compile Include="Control\BaseControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Control\Symbol.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Control\WindowsButton.cs">
       <SubType>Component</SubType>
     </Compile>
