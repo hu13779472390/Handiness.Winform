@@ -56,6 +56,12 @@
     <Compile Include="Control\BaseControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Control\CarouselPictrueBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Control\Panel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Control\Symbol.cs">
       <SubType>Component</SubType>
     </Compile>
