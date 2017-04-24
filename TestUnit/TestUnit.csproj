@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class1.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,13 +88,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Handiness.Winform.Control\Handiness.Winform.csproj">
-      <Project>{D969A5CE-A502-4FB5-A03D-2C5D6A5F0F55}</Project>
-      <Name>Handiness.Winform</Name>
-    </ProjectReference>
+    <Content Include="Logo.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Logo.ico" />
+    <ProjectReference Include="..\Handiness.Winform\Handiness.Winform.csproj">
+      <Project>{d969a5ce-a502-4fb5-a03d-2c5d6a5f0f55}</Project>
+      <Name>Handiness.Winform</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

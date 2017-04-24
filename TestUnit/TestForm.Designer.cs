@@ -81,10 +81,10 @@
             this.button2.ForeColor = System.Drawing.Color.White;
             this.button2.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
             this.button2.IsWaiting = false;
-            this.button2.Location = new System.Drawing.Point(480, 320);
+            this.button2.Location = new System.Drawing.Point(512, 282);
             this.button2.Name = "button2";
             this.button2.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(195)))), ((int)(((byte)(245)))));
-            this.button2.Size = new System.Drawing.Size(133, 57);
+            this.button2.Size = new System.Drawing.Size(105, 42);
             this.button2.TabIndex = 6;
             this.button2.Text = "开始";
             this.button2.Click += new System.EventHandler(this.button2_Click);

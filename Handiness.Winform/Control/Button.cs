@@ -60,7 +60,7 @@ namespace Handiness.Winform.Control
         private Color _normalColor = Color.FromArgb(61, 195, 245);
         private Color _currentColor = Color.FromArgb(61, 195, 245);
         private Color _shadowColor = Color.FromArgb(150,175,175,175);
-        private Single _shadowWidth = 2;
+        private Single _shadowWidth = 1;
         private WaitIndicator _waitIndicator;
         public Button() : base()
         {

@@ -1,4 +1,6 @@
-﻿namespace TestUnit
+﻿using Handiness.Winform;
+
+namespace TestUnit
 {
     partial class Form1
     {
@@ -35,6 +37,8 @@
             this.scutcheon3 = new Handiness.Winform.Control.Scutcheon();
             this.scutcheon4 = new Handiness.Winform.Control.Scutcheon();
             this.waitIndicator1 = new Handiness.Winform.Control.WaitIndicator();
+            this.symbol1 = new Handiness.Winform.Control.Symbol();
+            this.angleEditorTestControl1 = new AngleEditor.AngleEditorTestControl();
             this.SuspendLayout();
             // 
             // windowsButton1
@@ -47,7 +51,6 @@
             this.windowsButton1.ForeColor = System.Drawing.Color.White;
             this.windowsButton1.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
             this.windowsButton1.IconSize = 8F;
-            this.windowsButton1.IsWaiting = false;
             this.windowsButton1.Location = new System.Drawing.Point(723, 12);
             this.windowsButton1.Name = "windowsButton1";
             this.windowsButton1.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(195)))), ((int)(((byte)(245)))));
@@ -66,7 +69,6 @@
             this.windowsButton2.ForeColor = System.Drawing.Color.White;
             this.windowsButton2.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
             this.windowsButton2.IconSize = 6F;
-            this.windowsButton2.IsWaiting = false;
             this.windowsButton2.Location = new System.Drawing.Point(653, 12);
             this.windowsButton2.Name = "windowsButton2";
             this.windowsButton2.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(195)))), ((int)(((byte)(245)))));
@@ -81,11 +83,10 @@
             this.windowsButton3.CanMousePenetrable = false;
             this.windowsButton3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.windowsButton3.DownColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(175)))), ((int)(((byte)(175)))));
-            this.windowsButton3.Font = new System.Drawing.Font("FontAwesome", 6F);
+            this.windowsButton3.Font = new System.Drawing.Font("FontAwesome", 7F);
             this.windowsButton3.ForeColor = System.Drawing.Color.White;
             this.windowsButton3.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
-            this.windowsButton3.IconSize = 6F;
-            this.windowsButton3.IsWaiting = false;
+            this.windowsButton3.IconSize = 7F;
             this.windowsButton3.Location = new System.Drawing.Point(688, 12);
             this.windowsButton3.Name = "windowsButton3";
             this.windowsButton3.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(195)))), ((int)(((byte)(245)))));
@@ -150,16 +151,38 @@
             this.waitIndicator1.HatchBrushStyle = System.Drawing.Drawing2D.HatchStyle.DarkHorizontal;
             this.waitIndicator1.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.waitIndicator1.IsFollowParentBackColor = true;
-            this.waitIndicator1.Location = new System.Drawing.Point(462, 170);
+            this.waitIndicator1.Location = new System.Drawing.Point(470, 135);
             this.waitIndicator1.Name = "waitIndicator1";
             this.waitIndicator1.RollingSpeed = 60D;
             this.waitIndicator1.RollPartPercent = 40F;
             this.waitIndicator1.RollPartType = Handiness.Winform.Control.RollPartBrushType.Solid;
             this.waitIndicator1.RollPartWidthPercent = 10F;
-            this.waitIndicator1.Size = new System.Drawing.Size(92, 66);
+            this.waitIndicator1.Size = new System.Drawing.Size(70, 66);
             this.waitIndicator1.TabIndex = 7;
             this.waitIndicator1.Text = "waitIndicator1";
             this.waitIndicator1.WaitIndicatorColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(175)))), ((int)(((byte)(175)))));
+            // 
+            // symbol1
+            // 
+            this.symbol1.CanMousePenetrable = false;
+            this.symbol1.Font = new System.Drawing.Font("FontAwesome", 14F);
+            this.symbol1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.symbol1.Location = new System.Drawing.Point(356, 103);
+            this.symbol1.Name = "symbol1";
+            this.symbol1.Size = new System.Drawing.Size(38, 35);
+            this.symbol1.SymbolColor = System.Drawing.SystemColors.ActiveCaption;
+            this.symbol1.SymbolPattern = "";
+            this.symbol1.SymbolSize = 14F;
+            this.symbol1.TabIndex = 9;
+            // 
+            // angleEditorTestControl1
+            // 
+            this.angleEditorTestControl1.Angle = 0.66234944737220758D;
+            this.angleEditorTestControl1.BackColor = System.Drawing.Color.Beige;
+            this.angleEditorTestControl1.Location = new System.Drawing.Point(502, 259);
+            this.angleEditorTestControl1.Name = "angleEditorTestControl1";
+            this.angleEditorTestControl1.Size = new System.Drawing.Size(190, 112);
+            this.angleEditorTestControl1.TabIndex = 8;
             // 
             // Form1
             // 
@@ -167,6 +190,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.ClientSize = new System.Drawing.Size(762, 471);
+            this.Controls.Add(this.symbol1);
+            this.Controls.Add(this.angleEditorTestControl1);
             this.Controls.Add(this.waitIndicator1);
             this.Controls.Add(this.scutcheon4);
             this.Controls.Add(this.scutcheon3);
@@ -177,7 +202,6 @@
             this.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.TransparencyKey = System.Drawing.Color.Empty;
             this.ResumeLayout(false);
 
         }
@@ -191,5 +215,7 @@
         private Handiness.Winform.Control.Scutcheon scutcheon3;
         private Handiness.Winform.Control.Scutcheon scutcheon4;
         private Handiness.Winform.Control.WaitIndicator waitIndicator1;
+        private AngleEditor.AngleEditorTestControl angleEditorTestControl1;
+        private Handiness.Winform.Control.Symbol symbol1;
     }
 }

@@ -9,10 +9,34 @@ using System.Windows.Forms;
 
 namespace Handiness.Winform
 {
+
     public partial class BaseForm : Form
     {
+        /// <summary>
+        /// 窗体动画设置
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [Description("窗体动画设置")]
+        public WindowAnimation Animation { get; set; } = new WindowAnimation();
+
+        [Browsable(false)]
+        public new FormBorderStyle FormBorderStyle
+        {
+            get
+            {
+                return base.FormBorderStyle;
+            }
+            set
+            {
+                base.FormBorderStyle = FormBorderStyle.None;
+            }
+        }
+
         private Point _currentMousePoint;
-        private Boolean _isMove = false;
+        private Boolean _isMoving = false;
+
+
+
         /********************************/
         public BaseForm()
         {
@@ -24,11 +48,31 @@ namespace Handiness.Winform
         /// </summary>
         protected virtual void InitializeForm()
         {
-            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            //this.SetStyle(ControlStyles.UserPaint,true);
+            //this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.SetStyle(ControlStyles.Opaque, false);
             this.Icon = Properties.Resources.HandinessIcon;
-               this.TransparencyKey = Color.FromArgb(240,240,240);
             this.BackColor = Color.FromArgb(240, 240, 240);
+    
+
+        }
+        protected override void OnLoad(EventArgs e)
+        {
+            if (this.Animation.Enabled)
+            {
+                WindowsApi.AnimateWindow(this.Handle, this.Animation.AnimationTime,
+                    this.Animation.ShowAnimationFlag());
+            }
+            base.OnLoad(e);
+        }
+        protected override void OnClosed(EventArgs e)
+        {
+            if (this.Animation.Enabled)
+            {
+                WindowsApi.AnimateWindow(this.Handle, this.Animation.AnimationTime,
+                 this.Animation.HideAnimationFlag());
+            }
+            base.OnClosed(e);
         }
 
         /// <summary>
@@ -41,19 +85,19 @@ namespace Handiness.Winform
         }
 
 
-        #region 窗体移动
+        #region 窗体点击任意位置拖动
         protected override void OnMouseDown(MouseEventArgs e)
         {
             if (MouseButtons.Left == e.Button)
             {
                 this._currentMousePoint = e.Location;
-                this._isMove = true;
+                this._isMoving = true;
             }
             base.OnMouseDown(e);
         }
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            if (this._isMove)
+            if (this._isMoving)
             {
                 /**计算Point偏移值*/
                 Int32 offsetX = e.Location.X - this._currentMousePoint.X;
@@ -65,7 +109,7 @@ namespace Handiness.Winform
         }
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            this._isMove = false;
+            this._isMoving = false;
             base.OnMouseUp(e);
         }
         #endregion

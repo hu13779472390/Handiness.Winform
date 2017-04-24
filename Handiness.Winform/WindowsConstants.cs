@@ -8,7 +8,7 @@ namespace Handiness.Winform
     /// <summary>
     /// windows 消息常量
     /// </summary>
-    public class WMConstants
+    public class WindowsConstants
     {
         public const int WM_NULL = 0x0000; //   
         public const int WM_CREATE = 0x0001; //应用程序创建一个窗口   
@@ -207,19 +207,16 @@ namespace Handiness.Winform
         public const int WM_RENDERformAT = 0x0305; //   
         public const int WM_RENDERALLformATS = 0x0306; //   
         public const int WM_DESTROYCLIPBOARD = 0x0307; //当调用ENPTYCLIPBOARD函数时发送此消息给剪贴板的所有者   
-        public const int WM_DRAWCLIPBOARD = 0x0308; //当剪贴板的内容变化时发送此消息给剪贴板观察链的第一个窗口；它允许用剪贴板观察窗口来   
-        //显示剪贴板的新内容；   
+        public const int WM_DRAWCLIPBOARD = 0x0308; //当剪贴板的内容变化时发送此消息给剪贴板观察链的第一个窗口；它允许用剪贴板观察窗口来显示剪贴板的新内容；   
         public const int WM_PAINTCLIPBOARD = 0x0309; //当剪贴板包含CF_OWNERDIPLAY格式的数据并且剪贴板观察窗口的客户区需要重画；   
         public const int WM_VSCROLLCLIPBOARD = 0x030A; //   
         public const int WM_SIZECLIPBOARD = 0x030B; //当剪贴板包含CF_OWNERDIPLAY格式的数据并且剪贴板观察窗口的客户区域的大小已经改变是此消息通过剪贴板观察窗口发送给剪贴板的所有者；   
         public const int WM_ASKCBformATNAME = 0x030C; //通过剪贴板观察窗口发送此消息给剪贴板的所有者来请求一个CF_OWNERDISPLAY格式的剪贴板的名字   
         public const int WM_CHANGECBCHAIN = 0x030D; //当一个窗口从剪贴板观察链中移去时发送此消息给剪贴板观察链的第一个窗口；   
-        public const int WM_HSCROLLCLIPBOARD = 0x030E; //   
-        //此消息通过一个剪贴板观察窗口发送给剪贴板的所有者；它发生在当剪贴板包含CFOWNERDISPALY格式的数据并且有个事件在剪贴板观察窗的水平滚动条上；所有者应滚动剪贴板图象并更新滚动条的值；   
+        public const int WM_HSCROLLCLIPBOARD = 0x030E; //此消息通过一个剪贴板观察窗口发送给剪贴板的所有者；它发生在当剪贴板包含CFOWNERDISPALY格式的数据并且有个事件在剪贴板观察窗的水平滚动条上；所有者应滚动剪贴板图象并更新滚动条的值；   
         public const int WM_QUERYNEWPALETTE = 0x030F; //此消息发送给将要收到焦点的窗口，此消息能使窗口在收到焦点时同时有机会实现他的逻辑调色板   
         public const int WM_PALETTEISCHANGING = 0x0310; //当一个应用程序正要实现它的逻辑调色板时发此消息通知所有的应用程序   
-        public const int WM_PALETTECHANGED = 0x0311; //此消息在一个拥有焦点的窗口实现它的逻辑调色板后发送此消息给所有顶级并重叠的窗口，以此   
-        //来改变系统调色板   
+        public const int WM_PALETTECHANGED = 0x0311; //此消息在一个拥有焦点的窗口实现它的逻辑调色板后发送此消息给所有顶级并重叠的窗口，以此来改变系统调色板   
         public const int WM_HOTKEY = 0x0312; //当用户按下由REGISTERHOTKEY函数注册的热键时提交此消息   
         public const int WM_PRINT = 791; //应用程序发送此消息仅当WINDOWS或其它应用程序发出一个请求要求绘制一个应用程序的一部分；   
         public const int WM_PRINTCLIENT = 792; //   
@@ -260,6 +257,46 @@ namespace Handiness.Winform
         public const int SC_TASKLIST = 0xF130;
         public const int SC_SCREENSAVE = 0xF140;
         public const int SC_HOTKEY = 0xF150;
+
+
+
+        //窗体动画
+        /// <summary>
+        ///自左向右显示窗口。该标志可以在滑动动画中使用。当使用AW_CENTER标志时，该标志将被忽略。
+        /// </summary>
+        public const Int32 AW_HOR_POSITIVE = 0x00000001;
+        /// <summary>
+        ///  自右向左显示窗口。该标志可以在滑动动画中使用。当使用AW_CENTER标志时，该标志将被忽略。
+        /// </summary>
+        public const Int32 AW_HOR_NEGATIVE = 0x00000002;
+        /// <summary>
+        /// 自顶向下显示窗口。该标志可以在滑动动画中使用。当使用AW_CENTER标志时，该标志将被忽略。
+        /// </summary>
+        public const Int32 AW_VER_POSITIVE = 0x00000004;
+        /// <summary>
+        /// 自下向上显示窗口。该标志可以在滑动动画中使用。当使用AW_CENTER标志时，该标志将被忽略。
+        /// </summary>
+        public const Int32 AW_VER_NEGATIVE = 0x00000008;
+        /// <summary>
+        /// 若使用了AW_HIDE标志，则使窗口向内重叠；若未使用AW_HIDE标志，则使窗口向外扩展。
+        /// </summary>
+        public const Int32 AW_CENTER = 0x00000010;
+        /// <summary>
+        /// 隐藏窗口，缺省则显示窗口。
+        /// </summary>
+        public const Int32 AW_HIDE = 0x00010000;
+        /// <summary>
+        /// 激活窗口。在使用了AW_HIDE标志后不要使用这个标志。
+        /// </summary>
+        public const Int32 AW_ACTIVATE = 0x00020000;
+        /// <summary>
+        /// 使用滑动类型。缺省则为滑动动画类型。当使用AW_CENTER标志时，这个标志就被忽略。
+        /// </summary>
+        public const Int32 AW_SLIDE = 0x00040000;
+        /// <summary>
+        /// 使用淡出效果。只有当hWnd为顶层窗口的时候才可以使用此标志。
+        /// </summary>
+        public const Int32 AW_BLEND = 0x00080000;
 
         /////////////////////////////////////////////////////////////////////   
         //通知消息(Notification message)是指这样一种消息，一个窗口内的子控件发生了一些事情，需要通   

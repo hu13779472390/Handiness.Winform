@@ -43,6 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Editor\SymbolEditor.cs" />
+    <Compile Include="Editor\SymbolEditControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editor\SymbolEditControl.Designer.cs">
+      <DependentUpon>SymbolEditControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowAnimation.cs" />
     <Compile Include="AwesomeFont.cs" />
     <Compile Include="BaseForm.cs">
       <SubType>Form</SubType>
@@ -85,11 +93,14 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="WindowsApi.cs" />
-    <Compile Include="WMConstants.cs" />
+    <Compile Include="WindowsConstants.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\SymbolEditControl.resx">
+      <DependentUpon>SymbolEditControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

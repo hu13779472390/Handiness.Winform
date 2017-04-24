@@ -16,8 +16,29 @@ namespace Handiness.Winform.Control
         Minimize,
         Maximize
     }
-    public class WindowsButton : Button
+    public class WindowsButton : BaseControl
     {
+        [Description("系统按钮正常时的颜色")]
+        public Color NormalColor
+        {
+            get
+            {
+                return this._normalColor;
+            }
+            set
+            {
+                if (this._normalColor != value)
+                {
+                    this._normalColor = value;
+                    this._currentColor = value;
+                    this.Invalidate();
+                }
+            }
+        }
+        [Description("指针悬浮时系统按钮的颜色")]
+        public Color HoverColor { get; set; } = Color.FromArgb(70, 200, 250);
+        [Description("系统按钮被点击时的颜色")]
+        public Color DownColor { get; set; } = Color.FromArgb(175, 175, 175);
 
         [Description(" 图标的大小,以磅值为单位")]
         public Single IconSize
@@ -99,6 +120,7 @@ namespace Handiness.Winform.Control
             }
         }
         [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override String Text
         {
             get
@@ -122,6 +144,7 @@ namespace Handiness.Winform.Control
         }
 
         [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override Font Font
         {
             get
@@ -135,6 +158,10 @@ namespace Handiness.Winform.Control
             }
         }
         /********************************/
+        private Color _normalColor = Color.FromArgb(61, 195, 245);
+        private Color _currentColor = Color.FromArgb(61, 195, 245);
+        private Single _shadowWidth = 1;
+        private Color _shadowColor = Color.FromArgb(150, 175, 175, 175);
         private WindowsButtonType _windowsButtonType = WindowsButtonType.Close;
         private Action _fnSendMessage;
         public WindowsButton()
@@ -142,6 +169,30 @@ namespace Handiness.Winform.Control
             this.Font = new Font(AwesomeFont.FontFamily, 10);
             this.Size = new Size(40, 35);
             this.WindowsButtonType = WindowsButtonType.Close;
+            
+        }
+        protected override void OnPaint(PaintEventArgs pevent)
+        {
+
+            Graphics g = pevent.Graphics;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+
+
+            SizeF buttonSzie = new SizeF(this.Width - this._shadowWidth, this.Height - this._shadowWidth);
+            Brush nrlBrush = new SolidBrush(this._currentColor);
+            Brush shadowBrush = new SolidBrush(this._shadowColor);
+            RectangleF buttonRect = new RectangleF(new PointF(0, 0), buttonSzie);
+            RectangleF shadowRect = new RectangleF(new PointF(this._shadowWidth, this._shadowWidth), buttonSzie);
+            Brush textBrush = new SolidBrush(this.ForeColor);
+             
+
+            g.FillRectangle(shadowBrush, shadowRect);
+            g.FillRectangle(nrlBrush, buttonRect);
+
+            this.DrawText(g, textBrush, buttonRect);
+            //释放笔刷资源
+            this.ReleaseBrush(nrlBrush, shadowBrush, textBrush);
+            base.OnPaint(pevent);
         }
         protected override void OnClick(EventArgs e)
         {

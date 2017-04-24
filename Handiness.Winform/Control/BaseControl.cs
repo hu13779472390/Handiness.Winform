@@ -21,6 +21,7 @@ namespace Handiness.Winform.Control
         public BaseControl()
         {
             this.SetStyle(ControlStyles.Opaque, false);
+            this.SetStyle(ControlStyles.UserPaint,true);
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.DoubleBuffered = true;
         }
@@ -112,21 +113,21 @@ namespace Handiness.Winform.Control
             {
                 switch (m.Msg)
                 {
-                    case WMConstants.WM_MOUSEACTIVATE:
-                    case WMConstants.WM_MOUSEFIRST:
-                    case WMConstants.WM_MOUSEHOVER:
-                    case WMConstants.WM_MOUSELAST:
-                    case WMConstants.WM_MOUSELEAVE:
-                    case WMConstants.WM_LBUTTONDOWN:
-                    case WMConstants.WM_LBUTTONUP:
-                    case WMConstants.WM_LBUTTONDBLCLK:
-                    case WMConstants.WM_RBUTTONDOWN:
-                    case WMConstants.WM_RBUTTONUP:
-                    case WMConstants.WM_RBUTTONDBLCLK:
-                    case WMConstants.WM_MBUTTONDOWN:
-                    case WMConstants.WM_MBUTTONUP:
-                    case WMConstants.WM_MBUTTONDBLCLK:
-                    case WMConstants.WM_NCHITTEST:
+                    case WindowsConstants.WM_MOUSEACTIVATE:
+                    case WindowsConstants.WM_MOUSEFIRST:
+                    case WindowsConstants.WM_MOUSEHOVER:
+                    case WindowsConstants.WM_MOUSELAST:
+                    case WindowsConstants.WM_MOUSELEAVE:
+                    case WindowsConstants.WM_LBUTTONDOWN:
+                    case WindowsConstants.WM_LBUTTONUP:
+                    case WindowsConstants.WM_LBUTTONDBLCLK:
+                    case WindowsConstants.WM_RBUTTONDOWN:
+                    case WindowsConstants.WM_RBUTTONUP:
+                    case WindowsConstants.WM_RBUTTONDBLCLK:
+                    case WindowsConstants.WM_MBUTTONDOWN:
+                    case WindowsConstants.WM_MBUTTONUP:
+                    case WindowsConstants.WM_MBUTTONDBLCLK:
+                    case WindowsConstants.WM_NCHITTEST:
                         {
                             //将返回值置为 -1 表示交由父控件处理
                             m.Result = (IntPtr)(-1);

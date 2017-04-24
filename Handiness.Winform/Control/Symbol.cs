@@ -8,13 +8,17 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
-
+using System.Windows.Forms.Design;
+using Handiness.Winform.Editor;
 namespace Handiness.Winform.Control
 {
-    public  class Symbol: BaseControl
+
+
+
+    public class Symbol : BaseControl
     {
 
-        [Description(" 图标的大小,以磅为单位")]
+        [Description(" 图标的大小,以磅值为单位")]
         public Single SymbolSize
         {
             get
@@ -24,6 +28,7 @@ namespace Handiness.Winform.Control
             set
             {
                 this.Font = new Font(AwesomeFont.FontFamily, value);
+                this.Invalidate();
             }
         }
         [Description(" 图标的颜色")]
@@ -35,27 +40,29 @@ namespace Handiness.Winform.Control
             }
             set
             {
-                this.ForeColor = value ;
+                this.ForeColor = value;
                 this.Invalidate();
             }
         }
 
-        [Editor(typeof(AwesomeFontCodeSelector),typeof(UITypeEditor))]
+        [Editor(typeof(SymbolEditor), typeof(UITypeEditor))]
         [Description("图标的样式")]
-        public string SymbolPattern
+        public String SymbolPattern
         {
             get
             {
-                return this.Text;
+                return this._symbolPattern;
             }
             set
             {
-                this.Text = value;
+                this._symbolPattern = value;
+                this.Invalidate();
             }
         }
+        private String _symbolPattern = AwesomeFont.user;
 
-        [Obsolete]
         [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override Font Font
         {
             get
@@ -69,9 +76,10 @@ namespace Handiness.Winform.Control
             }
         }
 
-        [Obsolete]
+
         [Browsable(false)]
-        public override string Text
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override String Text
         {
             get
             {
@@ -105,16 +113,21 @@ namespace Handiness.Winform.Control
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
-            Graphics g = pevent.Graphics;
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            Brush textBrush = new SolidBrush(this.ForeColor);
-            RectangleF Rect = new RectangleF(new PointF(0, 0), this.Size);
-            this.DrawText(g, textBrush, Rect);
-            //释放笔刷资源
-            this.ReleaseBrush(textBrush);
+            if (!String.IsNullOrEmpty(this.SymbolPattern))
+            {
+                Graphics g = pevent.Graphics;
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                Brush textBrush = new SolidBrush(this.ForeColor);
+                RectangleF rect = new RectangleF(new PointF(0, 0), this.Size);
+                SizeF patternSize = g.MeasureString(this.SymbolPattern, this.Font);
+                PointF point = new PointF((rect.Width - patternSize.Width) / 2, (rect.Height - patternSize.Height) / 2);
+                g.DrawString(this.SymbolPattern, this.Font, textBrush, point);
+                //释放笔刷资源
+                this.ReleaseBrush(textBrush);
+            }
             base.OnPaint(pevent);
         }
 
-      
+
     }
 }

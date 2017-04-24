@@ -35,7 +35,7 @@ namespace Handiness.Winform.Control
         [Description("阴影的颜色")]
         public Color ShadowColor { get; set; } = Color.FromArgb(150, 175, 175, 175);
         [Description("阴影的宽度")]
-        public Int32 ShadowWidth { get; set; } = 2;
+        public Int32 ShadowWidth { get; set; } = 1;
         [Description("标牌的形状")]
         public ScutcheonShapeType ScutcheonShape { get; set; } = ScutcheonShapeType.Circle;
 
