@@ -154,8 +154,6 @@ namespace TestUnit
             this.waitIndicator1.Location = new System.Drawing.Point(470, 135);
             this.waitIndicator1.Name = "waitIndicator1";
             this.waitIndicator1.RollingSpeed = 60D;
-            this.waitIndicator1.RollPartPercent = 40F;
-            this.waitIndicator1.RollPartType = Handiness.Winform.Control.RollPartBrushType.Solid;
             this.waitIndicator1.RollPartWidthPercent = 10F;
             this.waitIndicator1.Size = new System.Drawing.Size(70, 66);
             this.waitIndicator1.TabIndex = 7;

@@ -23,14 +23,26 @@ namespace Handiness.Winform.Control
     /// </summary>
     public class WaitIndicator : BaseControl
     {
+        /// <summary>
+        /// 当使用RollPartBrushType使用Hatch时此属性生效
+        /// </summary>
         [Description("当使用RollPartBrushType使用Hatch时此属性生效")]
         public HatchStyle HatchBrushStyle { get; set; } = HatchStyle.DarkHorizontal;
+        /// <summary>
+        /// 等待指示器内部的颜色
+        /// </summary>
         [Description("等待指示器内部的颜色")]
         public Color InnerColor { get; set; }
+        /// <summary>
+        /// 是否让指示器内部颜色跟随父容器背景色变化
+        /// </summary>
         [Description("是否让指示器内部颜色跟随父容器背景色变化")]
         public Boolean IsFollowParentBackColor { get; set; } = true;
-        [Description("滚动部分的笔刷类型")]
-        public RollPartBrushType RollPartType { get; set; } = RollPartBrushType.Solid;
+        /// <summary>
+        /// 滚动部分绘制时的笔刷类型
+        /// </summary>
+        [Description("滚动部分绘制时的笔刷类型")]
+        public RollPartBrushType RollPartBrushType { get; set; } = RollPartBrushType.Solid;
 
         [DefaultValue(false)]
         [Description("开启或关闭滚动")]
@@ -92,17 +104,17 @@ namespace Handiness.Winform.Control
         public Single EachRollingAngle { get; set; } = 15;
 
         [Description("滚动部分的长度占总周长的百分比")]
-        public Single RollPartPercent
+        public Single RollPartLengthPercent
         {
             get
             {
-                return this._rollPartPercentage;
+                return this._rollPartLengthPercent;
             }
             set
             {
                 if (value > 0 && value < 85)
                 {
-                    this._rollPartPercentage = value;
+                    this._rollPartLengthPercent = value;
                     this.Invalidate();
                 }
             }
@@ -129,7 +141,7 @@ namespace Handiness.Winform.Control
         /// 当前的角度
         /// </summary>
         private Single _currentAngle;
-        private Single _rollPartPercentage = 40;
+        private Single _rollPartLengthPercent = 40;
         private Single _rollPartWidthPercent = 10;
         private RectangleF _outSideCircleRect;
         private RectangleF _innserCircleRect;
@@ -197,9 +209,9 @@ namespace Handiness.Winform.Control
 
             //计算滚动部分的起始角度与结束角度
             Single beginAngle = this._currentAngle;
-            Single endAngle = this._rollPartPercentage * 360F / 100F;
+            Single endAngle = this._rollPartLengthPercent * 360F / 100F;
 
-            switch (this.RollPartType)
+            switch (this.RollPartBrushType)
             {
                 case RollPartBrushType.Hatch:
                     {

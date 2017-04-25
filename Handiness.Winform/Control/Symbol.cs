@@ -121,7 +121,7 @@ namespace Handiness.Winform.Control
                 RectangleF rect = new RectangleF(new PointF(0, 0), this.Size);
                 SizeF patternSize = g.MeasureString(this.SymbolPattern, this.Font);
                 PointF point = new PointF((rect.Width - patternSize.Width) / 2, (rect.Height - patternSize.Height) / 2);
-                g.DrawString(this.SymbolPattern, this.Font, textBrush, point);
+                this.DrawText(g, textBrush,this.SymbolPattern,this.Font, point.X, point.Y);
                 //释放笔刷资源
                 this.ReleaseBrush(textBrush);
             }

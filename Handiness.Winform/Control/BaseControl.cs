@@ -11,8 +11,8 @@ namespace Handiness.Winform.Control
 {
     public class BaseControl : System.Windows.Forms.Control
     {
-        [Description("文本内容在当前字体与环境下的占用的大小（注意！当他大于控件的大小时，控件不会显示文字信息）")]
-        public virtual SizeF TextPixelSize { get; private set; }
+        //[Description("文本内容在当前字体与环境下的占用的大小（注意！当它大于控件的大小时，控件不会显示文字信息）")]
+        //public virtual SizeF TextPixelSize { get; private set; }
         /// <summary>
         /// 开启鼠标穿透
         /// </summary>
@@ -21,25 +21,27 @@ namespace Handiness.Winform.Control
         public BaseControl()
         {
             this.SetStyle(ControlStyles.Opaque, false);
-            this.SetStyle(ControlStyles.UserPaint,true);
+            this.SetStyle(ControlStyles.UserPaint, true);
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.DoubleBuffered = true;
+            this.Margin = new Padding(0, 0, 0, 0);
+            this.Padding = new Padding(0, 0, 0, 0);
         }
         /// <summary>
         /// 绘制文字信息至指定区域，默认文字垂直位置居中，水平位置由参数<see cref="x"/>指定
         /// </summary>
         /// <param name="g"></param>
         /// <param name="vectorRect"></param>
-        /// <param name="x">若值为0 则文字水平也居中</param>
         protected virtual void DrawText(Graphics g, Brush brush, RectangleF vectorRect, Single x)
         {
-            PointF offsex = new PointF(0, 0);
-            if (x != 0)
-            {
-                vectorRect.Width = 0;
-                offsex.X = x;
-            }
-            this.DrawText(g, brush, vectorRect, offsex);
+            SizeF textSize = this.CalcuteTextPixelSize(g);
+            Single offsetY = (vectorRect.Height - textSize.Height) / 2.0F;
+            this.DrawText(g, brush, x, offsetY);
+        }
+        protected override void OnTextChanged(EventArgs e)
+        {
+            this.Invalidate();
+            base.OnTextChanged(e);
         }
         /// <summary>
         /// 在控件上绘制文字信息，此函数默认将文字绘制至区域中心,并根据偏移量调整位置
@@ -47,33 +49,35 @@ namespace Handiness.Winform.Control
         /// <param name="g"></param>
         /// <param name="vectorRect">承载文字的区域</param>
         /// <param name="offset">文字的偏移量</param>
-        protected virtual void DrawText(Graphics g, Brush brush, RectangleF vectorRect, PointF offset)
+        protected virtual void DrawText(Graphics g, Brush brush, PointF offset)
         {
-            SizeF textPixelSize = this.FetchTextPixelSize(g);
-            this.TextPixelSize = textPixelSize;
-            PointF textLocation = new PointF(0, 0);
-            textLocation.X = vectorRect.Width != 0 ? (vectorRect.Width - textPixelSize.Width) / 2 : 0;
-            textLocation.Y = vectorRect.Height != 0 ? (vectorRect.Height - textPixelSize.Height) / 2 : 0;
-            if (!offset.IsEmpty)
+            this.DrawText(g, brush, offset.X, offset.Y);
+        }
+        protected virtual void DrawText(Graphics g, Brush brush, String text, Font font, Single x, Single y)
+        {
+            if (!String.IsNullOrEmpty(text))
             {
-                textLocation.X += offset.X;
-                textLocation.Y += offset.Y;
-            }
-            if (textLocation.X + textPixelSize.Width < this.Width)
-            {
-                this.DrawText(g, brush, textLocation.X, textLocation.Y);
+                g.DrawString(text, font, brush, x, y);
             }
         }
         protected virtual void DrawText(Graphics g, Brush brush, Single x, Single y)
         {
-            if (!String.IsNullOrEmpty(this.Text))
-            {
-                g.DrawString(this.Text, this.Font, brush, x, y);
-            }
+            this.DrawText(g, brush, this.Text, this.Font, x, y);
         }
-        protected virtual SizeF FetchTextPixelSize(Graphics g)
+        protected virtual SizeF CalcuteTextPixelSize(Graphics g)
         {
             return g.MeasureString(this.Text, this.Font);
+        }
+        /// <summary>
+        /// 使用 控件的字体与以及字体颜色创建的笔刷绘制 文本至指定的区域正中心
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="vectorRect"></param>
+        protected virtual void DrawText(Graphics g, RectangleF vectorRect)
+        {
+            Brush textBrush = new SolidBrush(this.ForeColor);
+            this.DrawText(g, textBrush, vectorRect);
+            this.ReleaseBrush(textBrush);
         }
         /// <summary>
         /// 在控件上绘制文字信息，此函数默认将文字绘制至区域中心，如果需要调整文字的位置，请使用其他重载
@@ -82,7 +86,10 @@ namespace Handiness.Winform.Control
         /// <param name="vectorRect">承载文字的区域</param>
         protected virtual void DrawText(Graphics g, Brush brush, RectangleF vectorRect)
         {
-            this.DrawText(g, brush, vectorRect, PointF.Empty);
+            SizeF textSize = this.CalcuteTextPixelSize(g);
+            Single offsetX = (vectorRect.Width - textSize.Width) / 2.0F;
+            Single offsetY = (vectorRect.Height - textSize.Height) / 2.0F;
+            this.DrawText(g, brush, this.Text, this.Font, offsetX, offsetY);
         }
         protected override void OnParentBackColorChanged(EventArgs e)
         {
@@ -100,7 +107,7 @@ namespace Handiness.Winform.Control
                 brush.Dispose();
             }
         }
-        protected virtual void SendMessageToParent(Int32 msg,Int32 wParam=0,Int32 lParam=0)
+        protected virtual void SendMessageToParent(Int32 msg, Int32 wParam = 0, Int32 lParam = 0)
         {
             if (this.Parent != null)
             {

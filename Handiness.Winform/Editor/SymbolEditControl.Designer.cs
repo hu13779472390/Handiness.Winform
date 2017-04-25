@@ -35,7 +35,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "SymbolEditControl";
-            this.Size = new System.Drawing.Size(509, 194);
+            this.Size = new System.Drawing.Size(335, 271);
             this.ResumeLayout(false);
 
         }

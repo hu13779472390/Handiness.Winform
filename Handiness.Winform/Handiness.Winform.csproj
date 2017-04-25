@@ -21,6 +21,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -43,6 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Control\Line.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Editor\SymbolEditor.cs" />
     <Compile Include="Editor\SymbolEditControl.cs">
       <SubType>UserControl</SubType>
@@ -50,6 +54,7 @@
     <Compile Include="Editor\SymbolEditControl.Designer.cs">
       <DependentUpon>SymbolEditControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Math.cs" />
     <Compile Include="WindowAnimation.cs" />
     <Compile Include="AwesomeFont.cs" />
     <Compile Include="BaseForm.cs">

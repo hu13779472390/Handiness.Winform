@@ -134,14 +134,14 @@ namespace Handiness.Winform.Control
                 this.Invalidate();
             }
         }
-        [Browsable(false)]
-        public override SizeF TextPixelSize
-        {
-            get
-            {
-                return base.TextPixelSize;
-            }
-        }
+        //[Browsable(false)]
+        //public override SizeF TextPixelSize
+        //{
+        //    get
+        //    {
+        //        return base.TextPixelSize;
+        //    }
+        //}
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -198,6 +198,35 @@ namespace Handiness.Winform.Control
         {
             this._fnSendMessage.Invoke();
             base.OnClick(e);
+        }
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            this._currentColor = this.HoverColor;
+            this.Invalidate();
+            base.OnMouseEnter(e);
+        }
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            this._currentColor = this.NormalColor;
+            this.Invalidate();
+            base.OnMouseLeave(e);
+        }
+
+        protected override void OnMouseDown(MouseEventArgs mevent)
+        {
+
+            this._currentColor = this.DownColor;
+            this.Invalidate();
+            base.OnMouseDown(mevent);
+
+        }
+        protected override void OnMouseUp(MouseEventArgs mevent)
+        {
+
+            this._currentColor = this.HoverColor;
+            this.Invalidate();
+            base.OnMouseUp(mevent);
+
         }
     }
 }
