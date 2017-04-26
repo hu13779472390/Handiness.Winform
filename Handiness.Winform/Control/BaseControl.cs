@@ -11,13 +11,43 @@ namespace Handiness.Winform.Control
 {
     public class BaseControl : System.Windows.Forms.Control
     {
-        //[Description("文本内容在当前字体与环境下的占用的大小（注意！当它大于控件的大小时，控件不会显示文字信息）")]
-        //public virtual SizeF TextPixelSize { get; private set; }
+        public override String Text
+        {
+            get
+            {
+                return base.Text;
+            }
+
+            set
+            {
+                base.Text = value;
+                Graphics g = this.CreateGraphics();
+                this.CalcuteTextPixelSize(g, true);
+                g.Dispose();
+            }
+        }
+        public override Font Font
+        {
+            get
+            {
+                return base.Font;
+            }
+
+            set
+            {
+                base.Font = value;
+                Graphics g = this.CreateGraphics();
+                this.CalcuteTextPixelSize(g, true);
+                g.Dispose();
+            }
+        }
+
+        protected virtual SizeF TextPixelSizeCache { get; private set; } = SizeF.Empty;
         /// <summary>
         /// 开启鼠标穿透
         /// </summary>
         [Description("开启鼠标穿透")]
-        public virtual Boolean CanMousePenetrable { get; set; } = false;
+        public virtual Boolean EnabledMousePierce { get; set; } = false;
         public BaseControl()
         {
             this.SetStyle(ControlStyles.Opaque, false);
@@ -60,13 +90,18 @@ namespace Handiness.Winform.Control
                 g.DrawString(text, font, brush, x, y);
             }
         }
+        
         protected virtual void DrawText(Graphics g, Brush brush, Single x, Single y)
         {
             this.DrawText(g, brush, this.Text, this.Font, x, y);
         }
-        protected virtual SizeF CalcuteTextPixelSize(Graphics g)
+        protected virtual SizeF CalcuteTextPixelSize(Graphics g, Boolean force = false)
         {
-            return g.MeasureString(this.Text, this.Font);
+            if (this.TextPixelSizeCache == SizeF.Empty || force)
+            {
+                this.TextPixelSizeCache = g.MeasureString(this.Text, this.Font);
+            }
+            return this.TextPixelSizeCache;
         }
         /// <summary>
         /// 使用 控件的字体与以及字体颜色创建的笔刷绘制 文本至指定的区域正中心
@@ -116,7 +151,7 @@ namespace Handiness.Winform.Control
         }
         protected override void WndProc(ref Message m)
         {
-            if (this.CanMousePenetrable)
+            if (this.EnabledMousePierce)
             {
                 switch (m.Msg)
                 {

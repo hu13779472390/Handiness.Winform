@@ -29,5 +29,10 @@ namespace Handiness.Winform.Editor
                
             }
         }
+
+        private void button1_Click(Object sender, EventArgs e)
+        {
+            this.Visible = false;
+        }
     }
 }

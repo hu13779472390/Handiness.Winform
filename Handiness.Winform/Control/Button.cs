@@ -101,7 +101,7 @@ namespace Handiness.Winform.Control
             this.ForeColor = Color.White;
             this._waitIndicator.Visible = false;
             this._waitIndicator.IsFollowParentBackColor = false;
-            this._waitIndicator.CanMousePenetrable = true;
+            this._waitIndicator.EnabledMousePierce = true;
             this._waitIndicator.RollPartWidthPercent = 20;
             this._waitIndicator.RollPartLengthPercent = 50;
             this.Controls.Add(this._waitIndicator);

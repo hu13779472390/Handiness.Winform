@@ -18,6 +18,7 @@ namespace Handiness.Winform.Control
     }
     public class WindowsButton : BaseControl
     {
+
         [Description("系统按钮正常时的颜色")]
         public Color NormalColor
         {
@@ -134,14 +135,7 @@ namespace Handiness.Winform.Control
                 this.Invalidate();
             }
         }
-        //[Browsable(false)]
-        //public override SizeF TextPixelSize
-        //{
-        //    get
-        //    {
-        //        return base.TextPixelSize;
-        //    }
-        //}
+
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]

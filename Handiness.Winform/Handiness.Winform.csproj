@@ -44,6 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnimationController.cs" />
+    <Compile Include="Control\Combobox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Control\Line.cs">
       <SubType>Component</SubType>
     </Compile>

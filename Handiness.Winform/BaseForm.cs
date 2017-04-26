@@ -53,7 +53,7 @@ namespace Handiness.Winform
             this.SetStyle(ControlStyles.Opaque, false);
             this.Icon = Properties.Resources.HandinessIcon;
             this.BackColor = Color.FromArgb(240, 240, 240);
-    
+
 
         }
         protected override void OnLoad(EventArgs e)

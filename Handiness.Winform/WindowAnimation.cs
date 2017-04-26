@@ -17,11 +17,11 @@ namespace Handiness.Winform
         /// <summary>
         /// 显示标志位
         /// </summary>
-        public static  Int32 ShowFlag { get;private set; } = WindowsConstants.AW_ACTIVATE;
+        public static Int32 ShowFlag { get; private set; } = WindowsConstants.AW_ACTIVATE;
         /// <summary>
         /// 隐藏标志位
         /// </summary>
-        public static  Int32 HideFlag { get;private set; } = WindowsConstants.AW_HIDE;
+        public static Int32 HideFlag { get; private set; } = WindowsConstants.AW_HIDE;
         /************/
         /// <summary>
         /// 是否开启窗体动画
@@ -37,10 +37,7 @@ namespace Handiness.Winform
         /// 窗体显示时动画的类型
         /// </summary>
         [Description("窗体显示时动画的类型")]
-        public WindowAnimationStyle Show
-        {
-            get; set;
-        } = WindowAnimationStyle.Center;
+        public WindowAnimationStyle Show { get; set; } = WindowAnimationStyle.Center;
 
         /// <summary>
         /// 窗体隐藏时动画的类型

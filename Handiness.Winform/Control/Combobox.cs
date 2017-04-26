@@ -1,0 +1,388 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace Handiness.Winform.Control
+{
+    public class Combobox : Button
+    {
+        /// <summary>
+        /// 当选择的Item发生改变后
+        /// </summary>
+        public event Action<Object, ComboboxToolStripItem> SelectItemChanged;
+
+
+        /// <summary>
+        /// 获取或设置Item的字体
+        /// </summary>
+        public Font ItemFont { get; set; }
+        /// <summary>
+        /// 当前下拉项的计数
+        /// </summary>
+        public Int32 ItemCount
+        {
+            get
+            {
+                return this._toolStripDropDown.Items.Count;
+            }
+        }
+        /// <summary>
+        /// 获取当前选中的项
+        /// </summary>
+        [Browsable(false)]
+        public ComboboxToolStripItem SelectedItem { get; private set; }
+        /// <summary>
+        /// 获取当前选中项的索引，或将当前项设置为具有指定索引的项
+        /// </summary>
+        [Browsable(true)]
+        public Int32 SelectedIndex
+        {
+            get
+            {
+                if (this.SelectedItem != null)
+                {
+                    return this.SelectedItem.Index;
+                }
+                return -1;
+            }
+            set
+            {
+                if (this.ItemCount > 0 && value >= 0)
+                {
+                    foreach (ComboboxToolStripItem item in this._toolStripDropDown.Items)
+                    {
+                        if (item.Index == value)
+                        {
+                            this.OnSelectItemChanged(this, item);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 获取当前选中项的文本或将当前项设置为具有指定文本的项
+        /// </summary>
+        [Description("获取当前选中项的文本")]
+        [Browsable(true)]
+        public String SelectedText
+        {
+            get
+            {
+                return this.SelectedItem?.Text;
+            }
+            set
+            {
+                if (this.ItemCount > 0 && !String.IsNullOrEmpty(value))
+                {
+                    foreach (ComboboxToolStripItem item in this._toolStripDropDown.Items)
+                    {
+                        if (item.Text == value)
+                        {
+                            this.OnSelectItemChanged(this, item);
+                            break;
+                        }
+                    }
+                }
+
+            }
+        }
+        /// <summary>
+        /// 获取当前选中项包含的至
+        /// </summary>
+        [Browsable(false)]
+        public Object SelectedValue
+        {
+            get
+            {
+                return this.SelectedItem?.Value;
+            }
+        }
+        /// <summary>
+        /// 是否根据条目数量自动调整下拉框的高度
+        /// </summary>
+        public Boolean AutoDropDownHeight { get; set; } = false;
+        /// <summary>
+        /// 设置下拉框的宽度
+        /// </summary>
+        public Int32 DropDownWidth
+        {
+            get
+            {
+                return this._toolStripDropDown.Width;
+            }
+            set
+            {
+                this._toolStripDropDown.Width = value;
+            }
+        }
+        public Int32 DropDownHeight
+        {
+            get
+            {
+                return this._toolStripDropDown.Height;
+            }
+            set
+            {
+                if (!this.AutoDropDownHeight)
+                {
+                    this._toolStripDropDown.Height = value;
+                }
+            }
+        }
+        /// <summary>
+        /// 是否已显示下拉框
+        /// </summary>
+        public Boolean DropDownShown { get; private set; }
+        /// <summary>
+        /// 获取或设置下拉条目的高度
+        /// </summary>
+        public Int32 ItemHeight { get; set; } = 20;
+
+        public ToolStripItemCollection Items
+        {
+            get
+            {
+                return this._toolStripDropDown.Items;
+            }
+        }
+
+        public override Font Font
+        {
+            get
+            {
+                return base.Font;
+            }
+
+            set
+            {
+                base.Font = value;
+                if (this.Font.FontFamily != value.FontFamily)
+                {
+                    Graphics g = this.CreateGraphics();
+                    this.CalcuteSymbolSize(g, true);
+                    g.Dispose();
+                }
+            }
+        }
+        /// <summary>
+        /// 下拉图标的颜色
+        /// </summary>
+        public Color SymbolColor { get; set; } = Color.FromArgb(240, 240, 240);
+        /// <summary>
+        /// 下拉图标的大小
+        /// </summary>
+        public Single SymbolSize
+        {
+            get
+            {
+                return this._symbolSize;
+            }
+            set
+            {
+                if (this._symbolSize != value)
+                {
+                    this._symbolSize = value;
+                    Graphics g = this.CreateGraphics();
+                    this.CalcuteSymbolSize(g, true);
+                    g.Dispose();
+                }
+            }
+        }
+        /********************************/
+
+        private ToolStripDropDown _toolStripDropDown = new ToolStripDropDown();
+        private Int32 _heightExtra = 5;
+        private const String SymbolDown = "▼";
+        private SizeF _symbolSizeCache = SizeF.Empty;
+        private Single _symbolSize = 12F;
+        /********************************/
+        public Combobox() : base()
+        {
+            this._toolStripDropDown.AutoSize = false;
+            this._toolStripDropDown.ItemAdded += _toolStripDropDown_ItemAdded;
+            this._toolStripDropDown.ItemRemoved += _toolStripDropDown_ItemRemoved;
+
+            this.DropDownWidth = 150;
+            this.DropDownHeight = 0;
+            this.ItemFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+
+        }
+        protected override void OnResize(EventArgs e)
+        {
+            if (this._toolStripDropDown.Width < this.Width)
+            {
+                this._toolStripDropDown.Width = this.Width;
+            }
+            base.OnResize(e);
+        }
+        /// <summary>
+        /// 向下拉框添加具有指定文本，值，名称的Item
+        /// </summary>
+        public void Add(String text, Object value = null, String name = null)
+        {
+            ComboboxToolStripItem item = new ComboboxToolStripItem();
+            item.Text = text;
+            item.Size = new Size(this._toolStripDropDown.Width, this.ItemHeight);
+            item.AutoSize = false;
+            item.Value = value;
+            item.Name = name ?? Guid.NewGuid().ToString("N");
+            item.Font = this.ItemFont;
+            item.Size = new Size(this._toolStripDropDown.Width, this.ItemHeight);
+            item.Index = this._toolStripDropDown.Items.Count - 1;
+
+
+            item.Click += (s, e) =>
+            {
+                this.OnSelectItemChanged(this, item);
+            };
+            this._toolStripDropDown.Items.Add(item);
+        }
+        public void AddRange(IEnumerable<String> texts)
+        {
+            foreach (String text in texts)
+            {
+                this.Add(text);
+            }
+        }
+        public void AddRange(IEnumerable<Tuple<String, Object, String>> items)
+        {
+            foreach (var item in items)
+            {
+                this.Add(item.Item1, item.Item2);
+            }
+        }
+        protected virtual void OnSelectItemChanged(Object sender, ComboboxToolStripItem item)
+        {
+            this.SelectedItem = item;
+            this.Text = this.SelectedItem.Text;
+            this.SelectItemChanged?.Invoke(sender, item);
+        }
+        protected override void OnPaint(PaintEventArgs pevent)
+        {
+            Graphics g = pevent.Graphics;
+            SizeF size = this.CalcuteSymbolSize(g);
+            Brush brush = new SolidBrush(this.SymbolColor);
+            base.OnPaint(pevent);
+            g.DrawString(SymbolDown, new Font(this.Font.FontFamily, this._symbolSize), brush, this.Width - size.Width.RoundToInt32() - (0.05 * this.Width).RoundToInt32(), ((this.Height - size.Height) / 2.0F).RoundToInt32());
+            brush.Dispose();
+        }
+        protected SizeF CalcuteSymbolSize(Graphics g, Boolean force = false)
+        {
+            if (this._symbolSizeCache == SizeF.Empty || force)
+            {
+                this._symbolSizeCache = g.MeasureString(SymbolDown, new Font(this.Font.FontFamily, this._symbolSize));
+            }
+            return this._symbolSizeCache;
+
+        }
+        protected override void OnClick(EventArgs e)
+        {
+            this._toolStripDropDown.Show(this, 3, this.Height);
+            this.DropDownShown = true;
+            base.OnClick(e);
+        }
+        private void _toolStripDropDown_ItemRemoved(Object sender, ToolStripItemEventArgs e)
+        {
+            if (this.AutoDropDownHeight)
+            {
+                this._toolStripDropDown.Height -= e.Item.Height + this._heightExtra;
+            }
+            this.RecalculateItemIndex();
+        }
+        /// <summary>
+        /// 重新计算Item的索引
+        /// </summary>
+        private void RecalculateItemIndex()
+        {
+            Int32 index = 0;
+            foreach (ComboboxToolStripItem item in this._toolStripDropDown.Items)
+            {
+                item.Index = index++;
+            }
+        }
+        private void _toolStripDropDown_ItemAdded(Object sender, ToolStripItemEventArgs e)
+        {
+            if (this.AutoDropDownHeight)
+            {
+                this._toolStripDropDown.Height += e.Item.Height + this._heightExtra;
+            }
+        }
+    }
+
+    public class ComboboxToolStripItem : ToolStripItem
+    {
+        /// <summary>
+        ///获取该Item在所属于ToolStrip的Item集合中的索引
+        /// </summary>
+        public Int32 Index { get; internal set; }
+        /// <summary>
+        /// 获取或设置该 Item 包含的值
+        /// </summary>
+        public Object Value { get; set; }
+        public Color HoverColor { get; set; } = Color.FromArgb(61, 195, 245);
+        public Color NormalColor { get; set; } = Color.FromArgb(240, 240, 240);
+        public Color PressColor { get; set; } = Color.FromArgb(175, 175, 175);
+
+        public Color HoverForeColor { get; set; } = Color.FromArgb(240, 240, 240);
+        public Color NormalForeColor { get; set; } = Color.FromArgb(30, 30, 30);
+        public Color PressForeColor { get; set; } = Color.FromArgb(250, 250, 250);
+
+
+
+        public ComboboxToolStripItem()
+        {
+
+            this.BackColor = this.NormalColor;
+            this.ForeColor = this.NormalForeColor;
+        }
+        protected override void OnMouseHover(EventArgs e)
+        {
+            this.BackColor = this.HoverColor;
+            this.ForeColor = this.HoverForeColor;
+            this.Invalidate();
+            base.OnMouseHover(e);
+        }
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            this.BackColor = this.NormalColor;
+            this.ForeColor = this.NormalForeColor;
+            this.Invalidate();
+            base.OnMouseLeave(e);
+        }
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+
+            this.BackColor = this.PressColor;
+            this.ForeColor = this.PressForeColor;
+            this.Invalidate();
+            base.OnMouseDown(e);
+        }
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            this.BackColor = this.HoverColor;
+            this.ForeColor = this.HoverForeColor;
+            this.Invalidate();
+            base.OnMouseUp(e);
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            Brush backBrush = new SolidBrush(this.BackColor);
+            Brush textBrush = new SolidBrush(this.ForeColor);
+            g.FillRectangle(backBrush, new RectangleF(0, 0, this.Width, this.Height));
+            SizeF textSize = g.MeasureString(this.Text, this.Font);
+            g.DrawString(this.Text, this.Font, textBrush, (this.Width - textSize.Width) * 0.5f, (this.Height - textSize.Height) * 0.5f);
+            backBrush.Dispose();
+            textBrush.Dispose();
+            base.OnPaint(e);
+        }
+
+    }
+}
