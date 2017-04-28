@@ -37,8 +37,27 @@ namespace Handiness.Winform.Control
         [Description("阴影的宽度")]
         public Int32 ShadowWidth { get; set; } = 1;
         [Description("标牌的形状")]
-        public ScutcheonShapeType ScutcheonShape { get; set; } = ScutcheonShapeType.Circle;
+        public ScutcheonShapeType ScutcheonShape
+        {
+            get
+            {
 
+                return this._scutcheonShape;
+            }
+            set
+            {
+                if (this._scutcheonShape != value)
+                {
+                    this._scutcheonShape = value;
+                    this.Invalidate();
+                }
+
+            }
+        }
+
+
+        /********************************/
+        private ScutcheonShapeType _scutcheonShape = ScutcheonShapeType.Circle;
         public Scutcheon() : base()
         {
             this.ScutcheonColor = Color.FromArgb(27, 166, 228);
@@ -57,7 +76,7 @@ namespace Handiness.Winform.Control
             g.CompositingQuality = CompositingQuality.HighQuality;
 
             /*********************/
-            
+
             Rectangle shadowRect = new Rectangle(this.ShadowWidth, this.ShadowWidth, scutcheonWidth, scutcheonHeight);
             Brush shadowBursh = new SolidBrush(this.ShadowColor);
 
@@ -107,7 +126,7 @@ namespace Handiness.Winform.Control
                     }
                     break;
             }
-            this.DrawText(g, textBrush, textVectorRect);
+            this.DrawText(g, this.Text, this.Font, textBrush, textVectorRect, this.TextAlignFormat);
 
             this.ReleaseBrush(shadowBursh, scutcheonBrush, textBrush);
             base.OnPaint(e);

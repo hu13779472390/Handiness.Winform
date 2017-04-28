@@ -23,6 +23,9 @@ namespace Handiness.Winform.Control
 
         [Description("自定义边框的宽度")]
         public Int32 CustomBorderWith { get; set; } = 1;
+
+        [Description("开启Panel的鼠标穿透")]
+        public Boolean EnabledMousePierce { get; set; } = false;
         /// <summary>
         /// 是否绘制边框
         /// </summary>
@@ -32,7 +35,7 @@ namespace Handiness.Winform.Control
         {
             this.DoubleBuffered = true;
         }
-        
+
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -46,6 +49,44 @@ namespace Handiness.Winform.Control
 
             }
             base.OnPaint(e);
+        }
+        protected override void WndProc(ref Message m)
+        {
+            if (this.EnabledMousePierce)
+            {
+                switch (m.Msg)
+                {
+                    case WindowsConstants.WM_MOUSEACTIVATE:
+                    case WindowsConstants.WM_MOUSEFIRST:
+                    case WindowsConstants.WM_MOUSEHOVER:
+                    case WindowsConstants.WM_MOUSELAST:
+                    case WindowsConstants.WM_MOUSELEAVE:
+                    case WindowsConstants.WM_LBUTTONDOWN:
+                    case WindowsConstants.WM_LBUTTONUP:
+                    case WindowsConstants.WM_LBUTTONDBLCLK:
+                    case WindowsConstants.WM_RBUTTONDOWN:
+                    case WindowsConstants.WM_RBUTTONUP:
+                    case WindowsConstants.WM_RBUTTONDBLCLK:
+                    case WindowsConstants.WM_MBUTTONDOWN:
+                    case WindowsConstants.WM_MBUTTONUP:
+                    case WindowsConstants.WM_MBUTTONDBLCLK:
+                    case WindowsConstants.WM_NCHITTEST:
+                        {
+                            //将返回值置为 -1 表示交由父控件处理
+                            m.Result = (IntPtr)(-1);
+                        }
+                        break;
+                    default:
+                        {
+                            base.WndProc(ref m);
+                        }
+                        break;
+                }
+            }
+            else
+            {
+                base.WndProc(ref m);
+            }
         }
     }
 }

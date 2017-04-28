@@ -51,6 +51,9 @@
     <Compile Include="Control\Line.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Control\Shade.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Editor\SymbolEditor.cs" />
     <Compile Include="Editor\SymbolEditControl.cs">
       <SubType>UserControl</SubType>

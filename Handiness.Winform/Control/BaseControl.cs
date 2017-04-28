@@ -11,6 +11,33 @@ namespace Handiness.Winform.Control
 {
     public class BaseControl : System.Windows.Forms.Control
     {
+        /// <summary>
+        /// 获取或设置文本布局信息
+        /// </summary>
+        [Description("文本布局信息")]
+        protected virtual StringFormat TextAlignFormat { get; set; } = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+
+        /// <summary>
+        /// 指定文本在控件上的对齐方式
+        /// </summary>
+        [Description("指定文本在控件上的对齐方式")]
+        public virtual ContentAlignment TextAlign
+        {
+            get
+            {
+                return this._textAlign;
+            }
+            set
+            {
+                if (this._textAlign != value)
+                {
+                    this.OnTextAlignChanged(this._textAlign, value);
+                    this._textAlign = value;
+                }
+            }
+        }
+
+
         public override String Text
         {
             get
@@ -41,21 +68,89 @@ namespace Handiness.Winform.Control
                 g.Dispose();
             }
         }
-
+        /// <summary>
+        /// 背景色跟随父容器
+        /// </summary>
+        protected virtual Boolean FollowParentBackColor { get; set; } = true;
         protected virtual SizeF TextPixelSizeCache { get; private set; } = SizeF.Empty;
+
         /// <summary>
         /// 开启鼠标穿透
         /// </summary>
         [Description("开启鼠标穿透")]
         public virtual Boolean EnabledMousePierce { get; set; } = false;
+
+        /********************************/
+        private ContentAlignment _textAlign = ContentAlignment.MiddleCenter;
         public BaseControl()
         {
-            this.SetStyle(ControlStyles.Opaque, false);
             this.SetStyle(ControlStyles.UserPaint, true);
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-            this.DoubleBuffered = true;
             this.Margin = new Padding(0, 0, 0, 0);
             this.Padding = new Padding(0, 0, 0, 0);
+        }
+        protected virtual void OnTextAlignChanged(ContentAlignment oldAlign, ContentAlignment newAlign)
+        {
+            switch (newAlign)
+            {
+                case ContentAlignment.BottomCenter:
+                    {
+                        this.TextAlignFormat.Alignment = StringAlignment.Center;
+                        this.TextAlignFormat.LineAlignment = StringAlignment.Far;
+                    }
+                    break;
+                case ContentAlignment.BottomLeft:
+                    {
+                        this.TextAlignFormat.Alignment = StringAlignment.Near;
+                        this.TextAlignFormat.LineAlignment = StringAlignment.Far;
+                    }
+                    break;
+                case ContentAlignment.BottomRight:
+                    {
+                        this.TextAlignFormat.Alignment = StringAlignment.Far;
+                        this.TextAlignFormat.LineAlignment = StringAlignment.Far;
+                    }
+                    break;
+                case ContentAlignment.MiddleCenter:
+                    {
+                        this.TextAlignFormat.Alignment = StringAlignment.Center;
+                        this.TextAlignFormat.LineAlignment = StringAlignment.Center;
+                    }
+                    break;
+                case ContentAlignment.MiddleLeft:
+                    {
+                        this.TextAlignFormat.Alignment = StringAlignment.Near;
+                        this.TextAlignFormat.LineAlignment = StringAlignment.Center;
+                    }
+                    break;
+                case ContentAlignment.MiddleRight:
+                    {
+                        this.TextAlignFormat.Alignment = StringAlignment.Far;
+                        this.TextAlignFormat.LineAlignment = StringAlignment.Center;
+                    }
+                    break;
+                case ContentAlignment.TopCenter:
+                    {
+                        this.TextAlignFormat.Alignment = StringAlignment.Center;
+                        this.TextAlignFormat.LineAlignment = StringAlignment.Near;
+                    }
+                    break;
+                case ContentAlignment.TopLeft:
+                    {
+                        this.TextAlignFormat.Alignment = StringAlignment.Near;
+                        this.TextAlignFormat.LineAlignment = StringAlignment.Near;
+                    }
+                    break;
+                case ContentAlignment.TopRight:
+                    {
+                        this.TextAlignFormat.Alignment = StringAlignment.Far;
+                        this.TextAlignFormat.LineAlignment = StringAlignment.Near;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            this.Invalidate();
         }
         /// <summary>
         /// 绘制文字信息至指定区域，默认文字垂直位置居中，水平位置由参数<see cref="x"/>指定
@@ -90,7 +185,7 @@ namespace Handiness.Winform.Control
                 g.DrawString(text, font, brush, x, y);
             }
         }
-        
+
         protected virtual void DrawText(Graphics g, Brush brush, Single x, Single y)
         {
             this.DrawText(g, brush, this.Text, this.Font, x, y);
@@ -126,10 +221,17 @@ namespace Handiness.Winform.Control
             Single offsetY = (vectorRect.Height - textSize.Height) / 2.0F;
             this.DrawText(g, brush, this.Text, this.Font, offsetX, offsetY);
         }
+        /// <summary>
+        /// 使用指定字体、笔刷、文本对齐格式在指定范围内绘制指定文本
+        /// </summary>
+        protected virtual void DrawText(Graphics g, String text, Font font, Brush brush, RectangleF vectorRect, StringFormat format)
+        {
+            g.DrawString(text, font, brush, vectorRect, format);
+        }
         protected override void OnParentBackColorChanged(EventArgs e)
         {
             //让容器背景跟随父容器的背景颜色变化
-            if (this.Parent != null)
+            if (this.Parent != null && this.FollowParentBackColor)
             {
                 this.BackColor = this.Parent.BackColor;
             }

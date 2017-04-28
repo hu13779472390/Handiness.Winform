@@ -119,9 +119,9 @@ namespace Handiness.Winform.Control
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 Brush textBrush = new SolidBrush(this.ForeColor);
                 RectangleF rect = new RectangleF(new PointF(0, 0), this.Size);
-                SizeF patternSize = g.MeasureString(this.SymbolPattern, this.Font);
-                PointF point = new PointF((rect.Width - patternSize.Width) / 2, (rect.Height - patternSize.Height) / 2);
-                this.DrawText(g, textBrush,this.SymbolPattern,this.Font, point.X, point.Y);
+                //SizeF patternSize = g.MeasureString(this.SymbolPattern, this.Font);
+                //PointF point = new PointF((rect.Width - patternSize.Width) / 2, (rect.Height - patternSize.Height) / 2);
+                this.DrawText(g, this.SymbolPattern, this.Font, textBrush, rect, this.TextAlignFormat);
                 //释放笔刷资源
                 this.ReleaseBrush(textBrush);
             }

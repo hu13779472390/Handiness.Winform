@@ -41,8 +41,17 @@ namespace Handiness.Winform
         public BaseForm()
         {
             InitializeComponent();
+            this.BackColor = Color.FromArgb(240, 240, 240);
+            this.Icon = Properties.Resources.HandinessIcon;
+            this.SetStyle(ControlStyles.Opaque, false);
+            this.Load += BaseForm_Load;
+        }
+
+        private void BaseForm_Load(Object sender, EventArgs e)
+        {
             this.InitializeForm();
         }
+
         /// <summary>
         /// 初始化窗体
         /// </summary>
@@ -50,11 +59,8 @@ namespace Handiness.Winform
         {
             //this.SetStyle(ControlStyles.UserPaint,true);
             //this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-            this.SetStyle(ControlStyles.Opaque, false);
-            this.Icon = Properties.Resources.HandinessIcon;
-            this.BackColor = Color.FromArgb(240, 240, 240);
-
-
+       
+       
         }
         protected override void OnLoad(EventArgs e)
         {

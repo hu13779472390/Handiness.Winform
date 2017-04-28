@@ -12,8 +12,9 @@ namespace Handiness.Winform.Control
     public class Combobox : Button
     {
         /// <summary>
-        /// 当选择的Item发生改变后
+        /// 当选择的下拉项发生改变后
         /// </summary>
+        [Description("当选择的下拉项发生改变后")]
         public event Action<Object, ComboboxToolStripItem> SelectItemChanged;
 
 
@@ -106,7 +107,22 @@ namespace Handiness.Winform.Control
         /// <summary>
         /// 是否根据条目数量自动调整下拉框的高度
         /// </summary>
-        public Boolean AutoDropDownHeight { get; set; } = false;
+        public Boolean AutoDropDownHeight
+        {
+            get
+            {
+                return this._autoDropDownHeight;
+            }
+            set
+            {
+                this._autoDropDownHeight = value;
+                if (value)
+                {
+                    this.RecalcuteDropDownHeight();
+                }
+            }
+        }
+
         /// <summary>
         /// 设置下拉框的宽度
         /// </summary>
@@ -201,6 +217,7 @@ namespace Handiness.Winform.Control
         private const String SymbolDown = "▼";
         private SizeF _symbolSizeCache = SizeF.Empty;
         private Single _symbolSize = 12F;
+        private Boolean _autoDropDownHeight = true;
         /********************************/
         public Combobox() : base()
         {
@@ -209,7 +226,7 @@ namespace Handiness.Winform.Control
             this._toolStripDropDown.ItemRemoved += _toolStripDropDown_ItemRemoved;
 
             this.DropDownWidth = 150;
-            this.DropDownHeight = 0;
+            this._toolStripDropDown.Height = 0;
             this.ItemFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
 
         }
@@ -220,6 +237,19 @@ namespace Handiness.Winform.Control
                 this._toolStripDropDown.Width = this.Width;
             }
             base.OnResize(e);
+        }
+        /// <summary>
+        /// 重新计算 DropDown的高度，在将AutoDropDownHeight 属性false设置为自动后，高度应该从固定值变回为根据Item项适应的高度
+        /// </summary>
+        private void RecalcuteDropDownHeight()
+        {
+            Int32 height = 0;
+            this.DropDownHeight = 0;
+            foreach (ComboboxToolStripItem item in this._toolStripDropDown.Items)
+            {
+                height = item.Height + this._heightExtra;
+            }
+            this.DropDownHeight = height;
         }
         /// <summary>
         /// 向下拉框添加具有指定文本，值，名称的Item
@@ -235,8 +265,7 @@ namespace Handiness.Winform.Control
             item.Font = this.ItemFont;
             item.Size = new Size(this._toolStripDropDown.Width, this.ItemHeight);
             item.Index = this._toolStripDropDown.Items.Count - 1;
-
-
+            item.TextAlignFormat = this.TextAlignFormat;
             item.Click += (s, e) =>
             {
                 this.OnSelectItemChanged(this, item);
@@ -300,7 +329,7 @@ namespace Handiness.Winform.Control
         /// </summary>
         private void RecalculateItemIndex()
         {
-            Int32 index = 0;
+            Int32 index = -1;
             foreach (ComboboxToolStripItem item in this._toolStripDropDown.Items)
             {
                 item.Index = index++;
@@ -317,6 +346,11 @@ namespace Handiness.Winform.Control
 
     public class ComboboxToolStripItem : ToolStripItem
     {
+        /// <summary>
+        /// 文本的对齐方式
+        /// </summary>
+        public StringFormat TextAlignFormat { get; set; } = StringFormat.GenericDefault;
+
         /// <summary>
         ///获取该Item在所属于ToolStrip的Item集合中的索引
         /// </summary>
@@ -340,6 +374,7 @@ namespace Handiness.Winform.Control
 
             this.BackColor = this.NormalColor;
             this.ForeColor = this.NormalForeColor;
+
         }
         protected override void OnMouseHover(EventArgs e)
         {
@@ -378,7 +413,13 @@ namespace Handiness.Winform.Control
             Brush textBrush = new SolidBrush(this.ForeColor);
             g.FillRectangle(backBrush, new RectangleF(0, 0, this.Width, this.Height));
             SizeF textSize = g.MeasureString(this.Text, this.Font);
-            g.DrawString(this.Text, this.Font, textBrush, (this.Width - textSize.Width) * 0.5f, (this.Height - textSize.Height) * 0.5f);
+            g.DrawString(
+                this.Text,
+                this.Font,
+                textBrush,
+                //  (this.Width - textSize.Width) * 0.5f, (this.Height - textSize.Height) * 0.5f,
+                new RectangleF(0, 0, this.Width, this.Height),
+                this.TextAlignFormat);
             backBrush.Dispose();
             textBrush.Dispose();
             base.OnPaint(e);

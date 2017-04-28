@@ -16,9 +16,11 @@ namespace Handiness.Winform.Control
         Minimize,
         Maximize
     }
+
     public class WindowsButton : BaseControl
     {
-
+        [Description("开启后系统按钮将始终保持与父窗体上边框和右边框的距离")]
+        public Boolean EnabledAdsorb { get; set; } = true;
         [Description("系统按钮正常时的颜色")]
         public Color NormalColor
         {
@@ -78,7 +80,7 @@ namespace Handiness.Winform.Control
                                           parentForm.WindowState = FormWindowState.Normal;
                                           this.Text = AwesomeFont.window_maximize;
                                       }
-                                      else if(parentForm.WindowState == FormWindowState.Normal)
+                                      else if (parentForm.WindowState == FormWindowState.Normal)
                                       {
                                           parentForm.WindowState = FormWindowState.Maximized;
                                           this.Text = AwesomeFont.window_restore;
@@ -158,12 +160,46 @@ namespace Handiness.Winform.Control
         private Color _shadowColor = Color.FromArgb(150, 175, 175, 175);
         private WindowsButtonType _windowsButtonType = WindowsButtonType.Close;
         private Action _fnSendMessage;
+        private IntPtr _formHandler = IntPtr.Zero;
+        /// <summary>
+        /// 吸附点
+        /// </summary>
+        private Point _adsorbPoint = Point.Empty;
         public WindowsButton()
         {
             this.Font = new Font(AwesomeFont.FontFamily, 10);
             this.Size = new Size(40, 35);
+            this.DoubleBuffered = true;
+            this.ForeColor = Color.White;
             this.WindowsButtonType = WindowsButtonType.Close;
-            
+        }
+
+
+        protected override void OnLayout(LayoutEventArgs levent)
+        {
+            this.Reposition();
+            base.OnLayout(levent);
+        }
+        protected override void OnParentChanged(EventArgs e)
+        {
+            this.Reposition();
+            base.OnParentChanged(e);
+        }
+        protected void Reposition()
+        {
+            Form form = this.FindForm();
+            if (form != null && form.Handle!=this._formHandler)
+            {
+                this._formHandler = form.Handle;
+                this._adsorbPoint = new Point(form.Width - this.Location.X, this.Location.Y);
+                form.Resize += (s, ev) =>
+                {
+                    if (this.EnabledAdsorb)
+                    {
+                        this.Location = new Point(form.Width - this._adsorbPoint.X, this.Location.Y);
+                    }
+                };
+            }
         }
         protected override void OnPaint(PaintEventArgs pevent)
         {
@@ -178,11 +214,10 @@ namespace Handiness.Winform.Control
             RectangleF buttonRect = new RectangleF(new PointF(0, 0), buttonSzie);
             RectangleF shadowRect = new RectangleF(new PointF(this._shadowWidth, this._shadowWidth), buttonSzie);
             Brush textBrush = new SolidBrush(this.ForeColor);
-             
+
 
             g.FillRectangle(shadowBrush, shadowRect);
             g.FillRectangle(nrlBrush, buttonRect);
-
             this.DrawText(g, textBrush, buttonRect);
             //释放笔刷资源
             this.ReleaseBrush(nrlBrush, shadowBrush, textBrush);

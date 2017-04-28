@@ -24,10 +24,9 @@ namespace Handiness.Winform.Editor
            
             if (edSvc != null)
             {
-                SymbolEditControl editControl = new SymbolEditControl();
+                SymbolEditControl editControl = new SymbolEditControl(edSvc);
                 editControl.Selected = current;
                 edSvc.DropDownControl(editControl);
-
                 selected = editControl.Selected;
             }
             return selected;

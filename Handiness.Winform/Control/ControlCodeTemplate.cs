@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace Handiness.Winform.Control
 {
-    public abstract class YourControl : System.Windows.Forms.Control
+    public abstract class YourControl : BaseControl
     {
-        public void Template()
+        public  YourControl()
         {
               
         }
