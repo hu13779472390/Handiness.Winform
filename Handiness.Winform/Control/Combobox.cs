@@ -222,13 +222,12 @@ namespace Handiness.Winform.Control
         public Combobox() : base()
         {
             this._toolStripDropDown.AutoSize = false;
-            this._toolStripDropDown.ItemAdded += _toolStripDropDown_ItemAdded;
-            this._toolStripDropDown.ItemRemoved += _toolStripDropDown_ItemRemoved;
+            this._toolStripDropDown.ItemAdded += this.ToolStripDropDown_ItemAdded;
+            this._toolStripDropDown.ItemRemoved += this.ToolStripDropDown_ItemRemoved;
 
             this.DropDownWidth = 150;
             this._toolStripDropDown.Height = 0;
-            this.ItemFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-
+            this.ItemFont = new Font("微软雅黑", 9F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(134)));
         }
         protected override void OnResize(EventArgs e)
         {
@@ -239,7 +238,7 @@ namespace Handiness.Winform.Control
             base.OnResize(e);
         }
         /// <summary>
-        /// 重新计算 DropDown的高度，在将AutoDropDownHeight 属性false设置为自动后，高度应该从固定值变回为根据Item项适应的高度
+        /// 重新计算 DropDown 的高度，在将 <see cref="AutoDropDownHeight"/>  属性false设置为自动后，高度应该从固定值变回为根据Item项适应的高度
         /// </summary>
         private void RecalcuteDropDownHeight()
         {
@@ -315,8 +314,9 @@ namespace Handiness.Winform.Control
             this._toolStripDropDown.Show(this, 3, this.Height);
             this.DropDownShown = true;
             base.OnClick(e);
+            
         }
-        private void _toolStripDropDown_ItemRemoved(Object sender, ToolStripItemEventArgs e)
+        private void ToolStripDropDown_ItemRemoved(Object sender, ToolStripItemEventArgs e)
         {
             if (this.AutoDropDownHeight)
             {
@@ -335,7 +335,7 @@ namespace Handiness.Winform.Control
                 item.Index = index++;
             }
         }
-        private void _toolStripDropDown_ItemAdded(Object sender, ToolStripItemEventArgs e)
+        private void ToolStripDropDown_ItemAdded(Object sender, ToolStripItemEventArgs e)
         {
             if (this.AutoDropDownHeight)
             {
@@ -352,7 +352,7 @@ namespace Handiness.Winform.Control
         public StringFormat TextAlignFormat { get; set; } = StringFormat.GenericDefault;
 
         /// <summary>
-        ///获取该Item在所属于ToolStrip的Item集合中的索引
+        ///获取该Item在所属于 <see cref="ToolStrip"/> 的Item集合中的索引
         /// </summary>
         public Int32 Index { get; internal set; }
         /// <summary>
@@ -417,7 +417,6 @@ namespace Handiness.Winform.Control
                 this.Text,
                 this.Font,
                 textBrush,
-                //  (this.Width - textSize.Width) * 0.5f, (this.Height - textSize.Height) * 0.5f,
                 new RectangleF(0, 0, this.Width, this.Height),
                 this.TextAlignFormat);
             backBrush.Dispose();

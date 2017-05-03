@@ -18,15 +18,16 @@ namespace Handiness.Winform.Control
         /// <summary>
         /// 是否绘制文字
         /// </summary>
-        public Boolean CanDrawText
+        [Description("是否绘制文本")]
+        public Boolean EnabledDrawText
         {
             get
             {
-                return this._canDrawText;
+                return this._enabledDrawText;
             }
             set
             {
-                this._canDrawText = value;
+                this._enabledDrawText = value;
                 this.Invalidate();
             }
         }
@@ -45,11 +46,17 @@ namespace Handiness.Winform.Control
 
         /********************************/
         private Int32 _alpha = 150;
-        private Boolean _canDrawText = true;
+        private Boolean _enabledDrawText = true;
         public Shade()
         {
             this.SetStyle(ControlStyles.Opaque, true);
             this.FollowParentBackColor = false;
+        }
+ 
+        protected override void OnParentChanged(EventArgs e)
+        {
+            this.BringToFront();
+            base.OnParentChanged(e);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -60,7 +67,7 @@ namespace Handiness.Winform.Control
             Brush backBrush = new SolidBrush(color);
 
             g.FillRectangle(backBrush, this.ClientRectangle);
-            if (this.CanDrawText)
+            if (this.EnabledDrawText)
             {
                 Brush textBrush = new SolidBrush(this.ForeColor);
                 e.Graphics.DrawString(this.Text, this.Font, textBrush, this.ClientRectangle, this.TextAlignFormat);

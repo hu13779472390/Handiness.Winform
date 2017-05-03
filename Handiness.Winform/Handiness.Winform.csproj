@@ -106,6 +106,7 @@
     </Compile>
     <Compile Include="WindowsApi.cs" />
     <Compile Include="WindowsConstants.cs" />
+    <Compile Include="WindowsStruct.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="BaseForm.resx">

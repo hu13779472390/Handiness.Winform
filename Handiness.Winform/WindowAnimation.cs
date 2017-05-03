@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
 namespace Handiness.Winform
 {
-
-
-
     /// <summary>
-    /// 窗体动画
+    /// 窗体动画类
     /// </summary>
+    [TypeConverter(typeof(WindowAnimationTypeConverter))]
     public class WindowAnimation
     {
         /// <summary>
@@ -37,21 +36,21 @@ namespace Handiness.Winform
         /// 窗体显示时动画的类型
         /// </summary>
         [Description("窗体显示时动画的类型")]
-        public WindowAnimationStyle Show { get; set; } = WindowAnimationStyle.Center;
+        public WindowAnimationStyle ShowEffect { get; set; } = WindowAnimationStyle.Center;
 
         /// <summary>
         /// 窗体隐藏时动画的类型
         /// </summary>
         [Description("窗体隐藏时动画的类型")]
-        public WindowAnimationStyle Hide { get; set; } = WindowAnimationStyle.Center;
+        public WindowAnimationStyle HideEffect { get; set; } = WindowAnimationStyle.Fade;
 
         public Int32 ShowAnimationFlag()
         {
-            return (Int32)this.Show | ShowFlag;
+            return (Int32)this.ShowEffect | ShowFlag;
         }
         public Int32 HideAnimationFlag()
         {
-            return (Int32)this.Hide | HideFlag;
+            return (Int32)this.HideEffect | HideFlag;
         }
     }
     /// <summary>
@@ -84,5 +83,27 @@ namespace Handiness.Winform
         /// </summary>
         BottomToTop = WindowsConstants.AW_SLIDE | WindowsConstants.AW_VER_NEGATIVE
 
+    }
+    public class WindowAnimationTypeConverter : TypeConverter
+    {
+        public WindowAnimationTypeConverter() { }
+        public override PropertyDescriptorCollection GetProperties(ITypeDescriptorContext context, Object value, Attribute[] attributes)
+        {
+            string[] names = new string[] {nameof(WindowAnimation.Enabled),nameof(WindowAnimation.AnimationTime),nameof(WindowAnimation.ShowEffect) ,
+            nameof(WindowAnimation.HideEffect)};
+            return TypeDescriptor.GetProperties(typeof(WindowAnimation), attributes).Sort(names);
+        }
+        public override Boolean GetPropertiesSupported(ITypeDescriptorContext context)
+        {
+            return true;
+        }
+        public override Object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, Object value, Type destinationType)
+        {
+            if (destinationType == typeof(String))
+            {
+                return "窗体动画设置";
+            }
+            return base.ConvertTo(context, culture, value, destinationType);
+        }
     }
 }

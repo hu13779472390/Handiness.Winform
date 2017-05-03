@@ -258,7 +258,18 @@ namespace Handiness.Winform
         public const int SC_SCREENSAVE = 0xF140;
         public const int SC_HOTKEY = 0xF150;
 
+        public const int SB_HORZ = 0;
+        public const int SB_VERT = 1;
+        public const int SB_CTL = 2;
+        public const int SB_BOTH = 3;
 
+
+        public const int SIF_RANGE = 0x0001;
+        public const int SIF_PAGE = 0x0002;
+        public const int SIF_POS = 0x0004;
+        public const int SIF_DISABLENOSCROLL = 0x0008;
+        public const int SIF_TRACKPOS = 0x0010;
+        public const int SIF_ALL = (SIF_RANGE | SIF_PAGE | SIF_POS | SIF_TRACKPOS);
 
         //窗体动画
         /// <summary>

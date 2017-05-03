@@ -39,6 +39,7 @@ namespace Handiness.Winform.Control
 
         protected override void OnPaint(PaintEventArgs e)
         {
+           
             if (this.IsPaintBorder)
             {
                 ControlPaint.DrawBorder(e.Graphics, this.ClientRectangle, this.CustomBorderColor, this.CustomBorderWith,
@@ -49,6 +50,10 @@ namespace Handiness.Winform.Control
 
             }
             base.OnPaint(e);
+        }
+        protected override void OnScroll(ScrollEventArgs se)
+        {
+            base.OnScroll(se);
         }
         protected override void WndProc(ref Message m)
         {

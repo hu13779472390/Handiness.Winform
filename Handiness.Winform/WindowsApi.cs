@@ -19,5 +19,8 @@ namespace Handiness.Winform
         /// <returns></returns>
         [DllImport("user32.dll", EntryPoint = "AnimateWindow")]
         public static extern Boolean AnimateWindow(IntPtr handle, Int32 dwTime, Int32 dwFags);
+
+        [DllImport("user32.dll", EntryPoint = "GetScrollInfo")]
+        public static extern Boolean GetScrollInfo(IntPtr hwnd, Int32 fnBar,ref SCROLLINFO lpsi);
     }
 }

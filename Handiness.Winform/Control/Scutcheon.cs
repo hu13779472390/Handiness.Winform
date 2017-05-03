@@ -65,7 +65,6 @@ namespace Handiness.Winform.Control
         }
 
 
-
         protected override void OnPaint(PaintEventArgs e)
         {
             Int32 scutcheonWidth = this.Width - this.ShadowWidth - 1;
