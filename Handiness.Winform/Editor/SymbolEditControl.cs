@@ -15,17 +15,33 @@ namespace Handiness.Winform.Editor
 {
     public partial class SymbolEditControl : UserControl
     {
+        //public static SymbolEditControl Instance
+        //{
+        //    get
+        //    {
+        //        if (_Instance == null)
+        //        {
+        //            _Instance = new SymbolEditControl();
+        //        }
+        //        return _Instance;
+        //    }
+        //}
+        //private static SymbolEditControl _Instance = null;
+        public IWindowsFormsEditorService WindowsFormsEditorService { get; set; } = null;
+
         private string _pattern = AwesomeFont.warning;
-        private IWindowsFormsEditorService _edSvc;
         private ToolTip _toolTip;
 
-        public SymbolEditControl(IWindowsFormsEditorService edSvc):this()
+        public SymbolEditControl(IWindowsFormsEditorService edSvc = null) : this()
         {
-            this._edSvc = edSvc;
+            this.WindowsFormsEditorService = edSvc;
+            this._toolTip = new ToolTip();
+
         }
         public SymbolEditControl()
         {
             InitializeComponent();
+
         }
 
         public string Selected
@@ -41,12 +57,13 @@ namespace Handiness.Winform.Editor
         }
         protected override void OnLoad(EventArgs e)
         {
-            this._toolTip = new ToolTip();
-            LoadPatterns();
+            this.DrawSymbolPatterns();
             base.OnLoad(e);
         }
-        private void LoadPatterns()
+        private void DrawSymbolPatterns()
         {
+
+
             FieldInfo[] fields = typeof(AwesomeFont).GetFields();
             this._flpPatternContainer.Visible = false;
             this._flpPatternContainer.Controls.Clear();
@@ -56,28 +73,31 @@ namespace Handiness.Winform.Editor
                 Symbol symbol = new Symbol();
                 symbol.Size = new Size(24, 23);
                 symbol.SymbolSize = 10;
-                symbol.BackColor = Color.FromArgb(61,195,245);
+                symbol.BackColor = Color.FromArgb(61, 195, 245);
                 symbol.ForeColor = Color.White;
                 symbol.SymbolPattern = fields[i].GetValue(null).ToString();
-                symbol.Margin = new Padding(2,2,2,2);
+                symbol.Margin = new Padding(2, 2, 2, 2);
                 this._toolTip.SetToolTip(symbol, fields[i].Name);
                 symbols[i] = symbol;
-                symbol.MouseDown += (s,e)=>
+                symbol.MouseDown += (s, e) =>
                 {
                     this.Selected = symbol.SymbolPattern;
-                    this._edSvc?.CloseDropDown();
+                    this.WindowsFormsEditorService?.CloseDropDown();
                 };
-                symbol.MouseHover += (s,e)=>
+                symbol.MouseHover += (s, e) =>
                 {
-                    symbol.BackColor = Color.FromArgb(175,175,175);
+                    Symbol sbl = s as Symbol;
+                    sbl.BackColor = Color.FromArgb(175, 175, 175);
                 };
-                symbol.MouseLeave +=(s,e)=>
-                {
-                    symbol.BackColor = Color.FromArgb(61, 195, 245);
-                };
+                symbol.MouseLeave += (s, e) =>
+                 {
+                     Symbol sbl = s as Symbol;
+                     sbl.BackColor = Color.FromArgb(61, 195, 245);
+                 };
             }
             this._flpPatternContainer.Controls.AddRange(symbols);
             this._flpPatternContainer.Visible = true;
+
         }
     }
 }

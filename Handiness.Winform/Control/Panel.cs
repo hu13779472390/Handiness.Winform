@@ -11,25 +11,25 @@ namespace Handiness.Winform.Control
     public class Panel : System.Windows.Forms.Panel
     {
         /// <summary>
-        /// 自定义边框的样式
+        /// 边框的样式
         /// </summary>
-        [Description("自定义边框的样式")]
-        public ButtonBorderStyle CustomBorderStyle { get; set; } = ButtonBorderStyle.Solid;
+        [Description("边框的样式")]
+        public new ButtonBorderStyle BorderStyle { get; set; } = ButtonBorderStyle.Solid;
         /// <summary>
         ///自定义边框的颜色
         /// </summary>
-        [Description("自定义边框的颜色")]
-        public Color CustomBorderColor { get; set; } = Color.Gray;
+        [Description("边框的颜色")]
+        public Color BorderColor { get; set; } = Color.Gray;
 
-        [Description("自定义边框的宽度")]
-        public Int32 CustomBorderWith { get; set; } = 1;
+        [Description("边框的宽度")]
+        public Int32 BorderWith { get; set; } = 1;
 
-        [Description("开启Panel的鼠标穿透")]
+        [Description("鼠标穿透")]
         public Boolean EnabledMousePierce { get; set; } = false;
         /// <summary>
         /// 是否绘制边框
         /// </summary>
-        public Boolean IsPaintBorder { get; set; } = true;
+        public Boolean IsDrawBorder { get; set; } = false;
 
         public Panel() : base()
         {
@@ -39,14 +39,13 @@ namespace Handiness.Winform.Control
 
         protected override void OnPaint(PaintEventArgs e)
         {
-           
-            if (this.IsPaintBorder)
+            if (this.IsDrawBorder)
             {
-                ControlPaint.DrawBorder(e.Graphics, this.ClientRectangle, this.CustomBorderColor, this.CustomBorderWith,
-                                           this.CustomBorderStyle, this.CustomBorderColor, this.CustomBorderWith,
-                                           this.CustomBorderStyle, this.CustomBorderColor, this.CustomBorderWith,
-                                           this.CustomBorderStyle, this.CustomBorderColor, this.CustomBorderWith,
-                                           this.CustomBorderStyle);
+                ControlPaint.DrawBorder(e.Graphics, this.ClientRectangle, this.BorderColor, this.BorderWith,
+                                           this.BorderStyle, this.BorderColor, this.BorderWith,
+                                           this.BorderStyle, this.BorderColor, this.BorderWith,
+                                           this.BorderStyle, this.BorderColor, this.BorderWith,
+                                           this.BorderStyle);
 
             }
             base.OnPaint(e);

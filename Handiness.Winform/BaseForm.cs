@@ -12,11 +12,12 @@ namespace Handiness.Winform
 
     public partial class BaseForm : Form
     {
+
         /// <summary>
         /// 窗体动画设置
         /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Always)]
         [Description("窗体动画设置")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public WindowAnimation Animation { get; set; } = new WindowAnimation();
 
         [Browsable(false)]
@@ -57,8 +58,7 @@ namespace Handiness.Winform
         /// </summary>
         protected virtual void InitializeForm()
         {
-            //this.SetStyle(ControlStyles.UserPaint,true);
-            //this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+
        
        
         }

@@ -31,7 +31,9 @@ namespace Handiness.Winform.Control
                 this._waitIndicator.IsRolled = value;
             }
         }
-
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Browsable(false)]
+        public new Color BackColor { get; set; }
         public override Color ForeColor
         {
             get

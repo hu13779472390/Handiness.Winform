@@ -6,7 +6,7 @@ using System.Text;
 using System.Windows.Forms;
 namespace Handiness.Winform
 {
-    public static class AnimationController
+    public static class AnimationExecutor
     {
         public static void DrawAnimation(this System.Windows.Forms.Control control, Func<Boolean> doEffect, Int32 interval = 10)
         {
@@ -22,6 +22,7 @@ namespace Handiness.Winform
                         {
                             if (doEffect != null && doEffect())
                             {
+                                control.Invalidate();
                                 timer.Enabled = true;
                             }
                             else
