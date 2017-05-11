@@ -25,7 +25,7 @@ namespace Handiness.Winform.Editor
             IWindowsFormsEditorService edSvc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
             if (edSvc != null)
             {
-                SymbolEditControl editControl = new SymbolEditControl(edSvc);
+                SymbolSelectorControl editControl = new SymbolSelectorControl(edSvc);
                 editControl.Selected = current;
                 edSvc.DropDownControl(editControl);
                 selected = editControl.Selected;

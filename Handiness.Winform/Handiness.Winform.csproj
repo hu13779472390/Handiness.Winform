@@ -58,11 +58,11 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Editor\SymbolEditor.cs" />
-    <Compile Include="Editor\SymbolEditControl.cs">
+    <Compile Include="Editor\SymbolSelectorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Editor\SymbolEditControl.Designer.cs">
-      <DependentUpon>SymbolEditControl.cs</DependentUpon>
+    <Compile Include="Editor\SymbolSelectorControl.Designer.cs">
+      <DependentUpon>SymbolSelectorControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Math.cs" />
     <Compile Include="WindowAnimation.cs" />
@@ -115,8 +115,8 @@
     <EmbeddedResource Include="BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Editor\SymbolEditControl.resx">
-      <DependentUpon>SymbolEditControl.cs</DependentUpon>
+    <EmbeddedResource Include="Editor\SymbolSelectorControl.resx">
+      <DependentUpon>SymbolSelectorControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

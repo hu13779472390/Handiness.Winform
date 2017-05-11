@@ -253,7 +253,7 @@ namespace Handiness.Winform.Control
         }
         protected override void WndProc(ref Message m)
         {
-            if (this.EnabledMousePierce)
+            if (this.EnabledMousePierce && !this.DesignMode)
             {
                 switch (m.Msg)
                 {

@@ -1,6 +1,6 @@
 ﻿namespace Handiness.Winform.Editor
 {
-    partial class SymbolEditControl
+    partial class SymbolSelectorControl
     {
         /// <summary> 
         /// 必需的设计器变量。

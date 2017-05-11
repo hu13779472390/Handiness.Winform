@@ -13,7 +13,7 @@ using System.Diagnostics;
 
 namespace Handiness.Winform.Editor
 {
-    public partial class SymbolEditControl : UserControl
+    public partial class SymbolSelectorControl : UserControl
     {
         //public static SymbolEditControl Instance
         //{
@@ -32,13 +32,13 @@ namespace Handiness.Winform.Editor
         private string _pattern = AwesomeFont.warning;
         private ToolTip _toolTip;
 
-        public SymbolEditControl(IWindowsFormsEditorService edSvc = null) : this()
+        public SymbolSelectorControl(IWindowsFormsEditorService edSvc = null) : this()
         {
             this.WindowsFormsEditorService = edSvc;
             this._toolTip = new ToolTip();
 
         }
-        public SymbolEditControl()
+        public SymbolSelectorControl()
         {
             InitializeComponent();
 
