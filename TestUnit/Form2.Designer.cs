@@ -81,7 +81,7 @@
             this.symbol1.Name = "symbol1";
             this.symbol1.Size = new System.Drawing.Size(75, 38);
             this.symbol1.SymbolColor = System.Drawing.SystemColors.ControlText;
-            this.symbol1.SymbolPattern = "";
+            this.symbol1.SymbolPattern = "";
             this.symbol1.SymbolSize = 15F;
             this.symbol1.TabIndex = 2;
             this.symbol1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;

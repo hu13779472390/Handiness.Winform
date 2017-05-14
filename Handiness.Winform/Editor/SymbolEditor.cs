@@ -7,12 +7,13 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.Drawing;
+using System.Reflection;
+
 namespace Handiness.Winform.Editor
 {
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
+
     public class SymbolEditor : UITypeEditor
     {
-
         public override Object EditValue(ITypeDescriptorContext context, IServiceProvider provider, Object value)
         {
             String current = value as String;
@@ -26,10 +27,10 @@ namespace Handiness.Winform.Editor
             if (edSvc != null)
             {
                 SymbolSelectorControl editControl = new SymbolSelectorControl(edSvc);
-                editControl.Selected = current;
+                editControl.PatternSelected = current;
+                 editControl.Refresh();
                 edSvc.DropDownControl(editControl);
-                selected = editControl.Selected;
-                editControl.Dispose();
+                selected = editControl.PatternSelected;
             }
             return selected;
         }
@@ -45,7 +46,7 @@ namespace Handiness.Winform.Editor
             if (text == null)
             {
                 text = "Error";
-                font = new Font("黑体",9F);
+                font = new Font("微软雅黑", 9F);
             }
        
             RectangleF rect = new RectangleF(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height);
@@ -57,6 +58,7 @@ namespace Handiness.Winform.Editor
             brush.Dispose();
             base.PaintValue(e);
         }
+     
         public override Boolean GetPaintValueSupported(ITypeDescriptorContext context)
         {
             return true;
